@@ -5,9 +5,9 @@ import { ethers } from "hardhat";
 
 import { DAO, SimpleStorageR1B3, SimpleStorageR1B3__factory } from "../../types";
 import { AccountStoredEvent, NumberStoredEvent } from "../../types/contracts/release1/build3/SimpleStorageR1B3";
-import { deployWithProxy } from "../proxy";
-import { deployDao } from "../test-dao";
-import { findEvent } from "../test-helpers";
+import { findEvent } from "../helpers/helpers";
+import { deployWithProxy } from "../helpers/helpers";
+import { deployDao } from "../helpers/test-dao";
 import { ADDRESS_TWO, STORE_ACCOUNT_PERMISSION_ID, STORE_NUMBER_PERMISSION_ID } from "./simple-storage-common";
 import { defaultInputR1B2 } from "./simple-stroage-r1b2";
 

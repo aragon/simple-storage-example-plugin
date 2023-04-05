@@ -2,10 +2,10 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BytesLike } from "ethers";
 import { ethers } from "hardhat";
 
-import buildMetadata1 from "../contracts/release1/build1/build-metadata.json";
-import buildMetadata2 from "../contracts/release1/build2/build-metadata.json";
-import buildMetadata3 from "../contracts/release1/build3/build-metadata.json";
-import releaseMetadata1 from "../contracts/release1/release-metadata.json";
+import buildMetadata1 from "../../contracts/release1/build1/build-metadata.json";
+import buildMetadata2 from "../../contracts/release1/build2/build-metadata.json";
+import buildMetadata3 from "../../contracts/release1/build3/build-metadata.json";
+import releaseMetadata1 from "../../contracts/release1/release-metadata.json";
 import {
   DAO,
   PluginRepo,
@@ -14,19 +14,11 @@ import {
   PluginRepo__factory,
   PluginSetupProcessor,
   PluginSetupProcessor__factory,
-} from "../types";
-import { uploadToIPFS } from "./helpers";
-import { Operation } from "./simple-storage/simple-storage-common";
-import { findEventTopicLog } from "./test-helpers";
-
-export type ReleaseMetadata = {
-  metadata: string;
-  builds: string[];
-};
-
-export type VersionMetadata = {
-  releases: ReleaseMetadata[];
-};
+} from "../../types";
+import { uploadToIPFS } from "../helpers/helpers";
+import { Operation } from "../simple-storage/simple-storage-common";
+import { findEventTopicLog } from "./helpers";
+import { VersionMetadata } from "./types";
 
 async function uploadMetadata(): Promise<VersionMetadata> {
   return {

@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 
 import buildMetadata1 from "../../contracts/release1/build1/build-metadata.json";
 import { DAO, SimpleStorageR1B1Setup, SimpleStorageR1B1Setup__factory, SimpleStorageR1B1__factory } from "../../types";
-import { deployDao } from "../test-dao";
+import { deployDao } from "../helpers/test-dao";
 import {
   ADDRESS_ZERO,
   EMPTY_DATA,

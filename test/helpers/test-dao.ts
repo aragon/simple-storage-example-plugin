@@ -1,9 +1,9 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers } from "hardhat";
 
-import { Admin, Admin__factory, DAO, DAO__factory } from "../types";
-import { deployWithProxy } from "./proxy";
-import { ADDRESS_ZERO, EMPTY_DATA } from "./simple-storage/simple-storage-common";
+import { Admin, Admin__factory, DAO, DAO__factory } from "../../types";
+import { ADDRESS_ZERO, EMPTY_DATA } from "../simple-storage/simple-storage-common";
+import { deployWithProxy } from "./helpers";
 
 export async function deployDao(signer: SignerWithAddress): Promise<[DAO, Admin]> {
   const DAO = new DAO__factory(signer);

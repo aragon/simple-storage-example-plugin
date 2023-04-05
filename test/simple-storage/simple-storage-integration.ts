@@ -23,11 +23,11 @@ import {
   SimpleStorageR1B3Setup__factory,
   SimpleStorageR1B3__factory,
 } from "../../types";
-import { createPluginRepo, createPluginSetupProcessor } from "../deploy-plugin-repo";
-import { deployDao } from "../test-dao";
-import { findEventTopicLog, installPLugin, uninstallPLugin, updatePlugin } from "../test-helpers";
+import { createPluginRepo, createPluginSetupProcessor } from "../helpers/deploy-plugin-repo";
+import { findEventTopicLog, installPLugin, uninstallPLugin, updatePlugin } from "../helpers/helpers";
+import { deployDao } from "../helpers/test-dao";
+import { PluginSetupRef } from "../helpers/types";
 import { ADDRESS_ONE } from "./simple-storage-common";
-import { PluginSetupRef } from "./types";
 
 describe("SimpleStorage Integration", function () {
   let signers: SignerWithAddress[];

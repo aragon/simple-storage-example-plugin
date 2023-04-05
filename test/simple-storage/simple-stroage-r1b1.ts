@@ -4,8 +4,8 @@ import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
 
 import { DAO, SimpleStorageR1B1, SimpleStorageR1B1__factory } from "../../types";
-import { deployWithProxy } from "../proxy";
-import { deployDao } from "../test-dao";
+import { deployWithProxy } from "../helpers/helpers";
+import { deployDao } from "../helpers/test-dao";
 import { STORE_PERMISSION_ID } from "./simple-storage-common";
 
 export type InputR1B1 = { number: BigNumber };

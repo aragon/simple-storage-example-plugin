@@ -11,7 +11,7 @@ import {
   SimpleStorageR1B2Setup__factory,
   SimpleStorageR1B2__factory,
 } from "../../types";
-import { deployDao } from "../test-dao";
+import { deployDao } from "../helpers/test-dao";
 import {
   ADDRESS_ONE,
   EMPTY_DATA,

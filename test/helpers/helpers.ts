@@ -1,16 +1,19 @@
 import { expect } from "chai";
-import { ContractTransaction } from "ethers";
+import { ContractFactory, ContractTransaction } from "ethers";
+import "ethers";
 import { Interface, LogDescription, defaultAbiCoder, keccak256 } from "ethers/lib/utils";
 import { ethers } from "hardhat";
+import { upgrades } from "hardhat";
+import IPFS from "ipfs-http-client";
 
-import { DAO, IPlugin, PluginSetupProcessor } from "../types";
+import { DAO, IPlugin, PluginSetupProcessor } from "../../types";
 import {
   InstallationPreparedEvent,
   UninstallationPreparedEvent,
   UpdateAppliedEvent,
   UpdatePreparedEvent,
-} from "../types//@aragon/osx/framework/plugin/setup/PluginSetupProcessor";
-import { PluginSetupRef } from "./simple-storage/types";
+} from "../../types/@aragon/osx/framework/plugin/setup/PluginSetupProcessor";
+import { PluginSetupRef } from "./types";
 
 export const ERRORS = {
   ALREADY_INITIALIZED: "Initializable: contract is already initialized",
@@ -166,4 +169,33 @@ export async function updatePlugin(
   }
 
   return { prepareTx, applyTx };
+}
+
+export async function uploadToIPFS(metadata: string): Promise<string> {
+  const client = IPFS.create({
+    url: "https://ipfs-0.aragon.network/api/v0",
+    headers: {
+      "X-API-KEY": "yRERPRwFAb5ZiV94XvJdgvDKoGEeFerfFsAQ65",
+    },
+  });
+
+  const cid = await client.add(metadata);
+  await client.pin.add(cid.cid);
+  return cid.path;
+}
+
+type DeployOptions = {
+  constructurArgs?: unknown[];
+  proxyType?: "uups";
+};
+
+export async function deployWithProxy<T>(contractFactory: ContractFactory, options: DeployOptions = {}): Promise<T> {
+  upgrades.silenceWarnings(); // Needed because we pass the `unsafeAllow: ["constructor"]` option.
+
+  return upgrades.deployProxy(contractFactory, [], {
+    kind: options.proxyType || "uups",
+    initializer: false,
+    unsafeAllow: ["constructor"],
+    constructorArgs: options.constructurArgs || [],
+  }) as unknown as Promise<T>;
 }
