@@ -1,4 +1,4 @@
-image: "gitpod/workspace-node:latest"
+image: "gitpod/workspace-node:16"
 
 tasks:
   - init: "pnpm install"

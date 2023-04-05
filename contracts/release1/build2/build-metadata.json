@@ -1,0 +1,11 @@
+{
+  "ui": "",
+  "change": "",
+  "pluginSetupABI": {
+    "prepareInstallation": ["uint256 number", "address account"],
+    "prepareUpdate": {
+      "fromBuild1": ["address account"]
+    },
+    "prepareUninstallation": []
+  }
+}

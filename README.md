@@ -1,15 +1,17 @@
-# Hardhat Template [![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat] [![License: MIT][license-badge]][license]
+# `SimpleStorage` Example Plugin
 
-[gitpod]: https://gitpod.io/#https://github.com/paulrberg/hardhat-template
+[![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat] [![License: AGPL-3.0-or-later][license-badge]][license]
+
+[gitpod]: https://gitpod.io/#https://github.com/aragon/simple-storage-example-plugin
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
-[gha]: https://github.com/paulrberg/hardhat-template/actions
-[gha-badge]: https://github.com/paulrberg/hardhat-template/actions/workflows/ci.yml/badge.svg
+[gha]: https://github.com/aragon/simple-storage-example-plugin/actions
+[gha-badge]: https://github.com/aragon/simple-storage-example-plugin/actions/workflows/ci.yml/badge.svg
 [hardhat]: https://hardhat.org/
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
-[license]: https://opensource.org/licenses/MIT
-[license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
+[license]: https://spdx.org/licenses/AGPL-3.0-or-later.html
+[license-badge]: https://img.shields.io/badge/License-AGPL--3.0--or--later-blue
 
-A Hardhat-based template for developing Solidity smart contracts, with sensible defaults.
+An Aragon OSx example plugin using
 
 - [Hardhat](https://github.com/nomiclabs/hardhat): compile, run and test smart contracts
 - [TypeChain](https://github.com/ethereum-ts/TypeChain): generate TypeScript bindings for smart contracts
@@ -18,47 +20,21 @@ A Hardhat-based template for developing Solidity smart contracts, with sensible 
 - [Solcover](https://github.com/sc-forks/solidity-coverage): code coverage
 - [Prettier Plugin Solidity](https://github.com/prettier-solidity/prettier-plugin-solidity): code formatter
 
+based on [Paul Razvan Berg's great hardhat-template](https://github.com/PaulRBerg/hardhat-template).
+
 ## Getting Started
 
-Click the [`Use this template`](https://github.com/paulrberg/hardhat-template/generate) button at the top of the page to
-create a new repository with this repo as the initial state.
-
-## Features
-
-This template builds upon the frameworks and libraries mentioned above, so for details about their specific features,
-please consult their respective documentations.
-
-For example, for Hardhat, you can refer to the [Hardhat Tutorial](https://hardhat.org/tutorial) and the
-[Hardhat Docs](https://hardhat.org/docs). You might be in particular interested in reading the
-[Testing Contracts](https://hardhat.org/tutorial/testing-contracts) section.
-
-### Sensible Defaults
-
-This template comes with sensible default configurations in the following files:
-
-```text
-├── .editorconfig
-├── .eslintignore
-├── .eslintrc.yml
-├── .gitignore
-├── .prettierignore
-├── .prettierrc.yml
-├── .solcover.js
-├── .solhint.json
-└── hardhat.config.ts
-```
+This `SimpleStorage` example accompanies the guide on [How to write an upgradeable plugin](https://devs.aragon.org/docs/osx/how-to-guides/plugin-development/upgradeable-plugin/) from the Aragon Developer Portal.
 
 ### VSCode Integration
 
-This template is IDE agnostic, but for the best user experience, you may want to use it in VSCode alongside Nomic
-Foundation's [Solidity extension](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity).
+This example is IDE agnostic, but for the best user experience, you may want to use it in VSCode alongside Nomic Foundation's [Solidity extension](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity).
 
 ### GitHub Actions
 
-This template comes with GitHub Actions pre-configured. Your contracts will be linted and tested on every push and pull
-request made to the `main` branch.
+This template comes with GitHub Actions pre-configured. Your contracts will be linted and tested on every push and pull request made to the `main` branch.
 
-Note though that to make this work, you must use your `INFURA_API_KEY` and your `MNEMONIC` as GitHub secrets.
+Note though that to make this work, you must use your `MNEMONIC` and `INFURA_API_KEY` as [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
 
 You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.yml).
 
@@ -66,9 +42,7 @@ You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.
 
 ### Pre Requisites
 
-Before being able to run any command, you need to create a `.env` file and set a BIP-39 compatible mnemonic as an
-environment variable. You can follow the example in `.env.example`. If you don't already have a mnemonic, you can use
-this [website](https://iancoleman.io/bip39/) to generate one.
+Before being able to run any command, you need to create a `.env` file and set a BIP-39 compatible mnemonic as an environment variable. To test the contracts against the current Aragon ethereum mainnet version, you must also set an Infura API key. You can follow the example in `.env.example`. If you don't already have a mnemonic, you can use this [website](https://iancoleman.io/bip39/) to generate one. If you don't already an Infura API key, you can sign up for [Infura ] https://app.infura.io/login.
 
 Then, proceed with installing dependencies:
 
@@ -152,16 +126,14 @@ $ pnpm deploy --greeting "Bonjour, le monde!"
 
 ### Syntax Highlighting
 
-If you use VSCode, you can get Solidity syntax highlighting with the
-[hardhat-solidity](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity) extension.
+If you use VSCode, you can get Solidity syntax highlighting with the [hardhat-solidity](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity) extension.
 
 ## Using GitPod
 
 [GitPod](https://www.gitpod.io/) is an open-source developer platform for remote development.
 
-To view the coverage report generated by `pnpm coverage`, just click `Go Live` from the status bar to turn the server
-on/off.
+To view the coverage report generated by `pnpm coverage`, just click `Go Live` from the status bar to turn the server on/off.
 
 ## License
 
-This project is licensed under MIT.
+This project is licensed under AGPL-3.0-or-later.

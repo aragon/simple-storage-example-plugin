@@ -3,7 +3,6 @@ plugins:
   - "@trivago/prettier-plugin-sort-imports"
   - "prettier-plugin-solidity"
 printWidth: 120
-proseWrap: "always"
 singleQuote: false
 tabWidth: 2
 trailingComma: "all"
@@ -21,3 +20,6 @@ overrides:
       importOrderSeparation: true
       importOrderSortSpecifiers: true
       parser: "typescript"
+
+  - "files": "*.md"
+    "options": { "useTabs": false, "singleQuote": true, "bracketSpacing": false }
