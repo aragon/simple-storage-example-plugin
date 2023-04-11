@@ -15,6 +15,8 @@ contract SimpleStorageR1B1 is PluginUUPSUpgradeable {
         number = _number;
     }
 
+    /// @notice Stores a new number to storage. Caller needs STORE_PERMISSION.
+    /// @param _number Number to store on storage.
     function storeNumber(uint256 _number) external auth(STORE_PERMISSION_ID) {
         number = _number;
     }
