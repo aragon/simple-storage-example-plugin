@@ -120,6 +120,7 @@ describe('SimpleStorage Integration', function () {
       let plugin: SimpleStorageR1B1;
 
       beforeEach(async () => {
+        // Install build 1.
         plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
           await installPLugin(
             psp,
@@ -133,13 +134,14 @@ describe('SimpleStorage Integration', function () {
         );
       });
 
-      it('installs & uninstalls', async () => {
-        expect(await plugin.implementation()).to.be.eq(
-          await simpleStorageR1B1Setup.implementation()
-        );
+      it("installs & uninstalls", async () => {
+        // Check implementation.
+        expect(await plugin.implementation()).to.be.eq(await simpleStorageR1B1Setup.implementation());
 
+        // Check state.
         expect(await plugin.number()).to.eq(123);
 
+        // Uninstall build 1.
         await uninstallPLugin(
           psp,
           dao,
@@ -158,6 +160,7 @@ describe('SimpleStorage Integration', function () {
       let plugin: SimpleStorageR1B2;
 
       beforeEach(async () => {
+        // Install build 2.
         plugin = new SimpleStorageR1B2__factory(signers[0]).attach(
           await installPLugin(
             psp,
@@ -171,14 +174,15 @@ describe('SimpleStorage Integration', function () {
         );
       });
 
-      it('installs & uninstalls', async () => {
-        expect(await plugin.implementation()).to.be.eq(
-          await simpleStorageR1B2Setup.implementation()
-        );
+      it("installs & uninstalls", async () => {
+        // Check implementation.
+        expect(await plugin.implementation()).to.be.eq(await simpleStorageR1B2Setup.implementation());
 
+        // Check state.
         expect(await plugin.number()).to.eq(123);
         expect(await plugin.account()).to.eq(ADDRESS_ONE);
 
+        // Uninstall build 2.
         await uninstallPLugin(
           psp,
           dao,
@@ -192,7 +196,8 @@ describe('SimpleStorage Integration', function () {
         );
       });
 
-      it('updates from build 1', async () => {
+      it("updates from build 1", async () => {
+        // Install build 1.
         const plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
           await installPLugin(
             psp,
@@ -205,12 +210,10 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        await dao.grant(
-          plugin.address,
-          psp.address,
-          await plugin.UPGRADE_PLUGIN_PERMISSION_ID()
-        );
+        // Grant permission to upgrade.
+        await dao.grant(plugin.address, psp.address, await plugin.UPGRADE_PLUGIN_PERMISSION_ID());
 
+        // Update to build 2.
         await updatePlugin(
           psp,
           dao,
@@ -224,13 +227,13 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        const updatedPlugin = new SimpleStorageR1B2__factory(signers[0]).attach(
-          plugin.address
-        );
+        // Get updated contract.
+        const updatedPlugin = new SimpleStorageR1B2__factory(signers[0]).attach(plugin.address);
 
-        expect(await updatedPlugin.implementation()).to.be.eq(
-          await simpleStorageR1B2Setup.implementation()
-        );
+        // Check implementation.
+        expect(await updatedPlugin.implementation()).to.be.eq(await simpleStorageR1B2Setup.implementation());
+
+        // Check state.
         expect(await updatedPlugin.number()).to.eq(123);
         expect(await updatedPlugin.account()).to.eq(ADDRESS_ONE);
       });
@@ -240,6 +243,7 @@ describe('SimpleStorage Integration', function () {
       let plugin: SimpleStorageR1B3;
 
       beforeEach(async () => {
+        // Install build 3.
         plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
           await installPLugin(
             psp,
@@ -253,14 +257,15 @@ describe('SimpleStorage Integration', function () {
         );
       });
 
-      it('installs & uninstalls', async () => {
-        expect(await plugin.implementation()).to.be.eq(
-          await simpleStorageR1B3Setup.implementation()
-        );
+      it("installs & uninstalls", async () => {
+        // Check implementation.
+        expect(await plugin.implementation()).to.be.eq(await simpleStorageR1B3Setup.implementation());
 
+        // Check state.
         expect(await plugin.number()).to.eq(123);
         expect(await plugin.account()).to.eq(ADDRESS_ONE);
 
+        // Uninstall build 3.
         await uninstallPLugin(
           psp,
           dao,
@@ -274,7 +279,8 @@ describe('SimpleStorage Integration', function () {
         );
       });
 
-      it('updates from build 1', async () => {
+      it("updates from build 1", async () => {
+        // Install build 1.
         const plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
           await installPLugin(
             psp,
@@ -287,12 +293,10 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        await dao.grant(
-          plugin.address,
-          psp.address,
-          await plugin.UPGRADE_PLUGIN_PERMISSION_ID()
-        );
+        // Grant permission to upgrade.
+        await dao.grant(plugin.address, psp.address, await plugin.UPGRADE_PLUGIN_PERMISSION_ID());
 
+        // Update to build 3.
         const results = await updatePlugin(
           psp,
           dao,
@@ -306,32 +310,25 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        const updatedPlugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          plugin.address
-        );
+        // Get updated contract.
+        const updatedPlugin = new SimpleStorageR1B3__factory(signers[0]).attach(plugin.address);
 
-        expect(await updatedPlugin.implementation()).to.be.eq(
-          await simpleStorageR1B3Setup.implementation()
-        );
+        // Check implementation.
+        expect(await updatedPlugin.implementation()).to.be.eq(await simpleStorageR1B3Setup.implementation());
 
-        const numberStoredEvent = await findEventTopicLog(
-          results.applyTx,
-          updatedPlugin.interface,
-          'NumberStored'
-        );
+        // Check state.
         expect(await updatedPlugin.number()).to.eq(123);
-        expect(numberStoredEvent.args.number).to.equal(123);
-
-        const accountStoredEvent = await findEventTopicLog(
-          results.applyTx,
-          updatedPlugin.interface,
-          'AccountStored'
-        );
         expect(await updatedPlugin.account()).to.eq(ADDRESS_ONE);
+
+        // Check events.
+        const numberStoredEvent = await findEventTopicLog(results.applyTx, updatedPlugin.interface, "NumberStored");
+        expect(numberStoredEvent.args.number).to.equal(123);
+        const accountStoredEvent = await findEventTopicLog(results.applyTx, updatedPlugin.interface, "AccountStored");
         expect(accountStoredEvent.args.account).to.equal(ADDRESS_ONE);
       });
 
-      it('updates from build 2', async () => {
+      it("updates from build 2", async () => {
+        // Install build 2.
         const plugin = new SimpleStorageR1B2__factory(signers[0]).attach(
           await installPLugin(
             psp,
@@ -344,12 +341,10 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        await dao.grant(
-          plugin.address,
-          psp.address,
-          await plugin.UPGRADE_PLUGIN_PERMISSION_ID()
-        );
+        // Grant permission to upgrade.
+        await dao.grant(plugin.address, psp.address, await plugin.UPGRADE_PLUGIN_PERMISSION_ID());
 
+        // Update to build 3.
         const results = await updatePlugin(
           psp,
           dao,
@@ -363,28 +358,20 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        const updatedPlugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          plugin.address
-        );
+        // Get updated contract.
+        const updatedPlugin = new SimpleStorageR1B3__factory(signers[0]).attach(plugin.address);
 
-        expect(await updatedPlugin.implementation()).to.be.eq(
-          await simpleStorageR1B3Setup.implementation()
-        );
+        // Check implementation.
+        expect(await updatedPlugin.implementation()).to.be.eq(await simpleStorageR1B3Setup.implementation());
 
-        const numberStoredEvent = await findEventTopicLog(
-          results.applyTx,
-          updatedPlugin.interface,
-          'NumberStored'
-        );
+        // Check state.
         expect(await updatedPlugin.number()).to.eq(123);
-        expect(numberStoredEvent.args.number).to.equal(123);
-
-        const accountStoredEvent = await findEventTopicLog(
-          results.applyTx,
-          updatedPlugin.interface,
-          'AccountStored'
-        );
         expect(await updatedPlugin.account()).to.eq(ADDRESS_ONE);
+
+        // Check events.
+        const numberStoredEvent = await findEventTopicLog(results.applyTx, updatedPlugin.interface, "NumberStored");
+        expect(numberStoredEvent.args.number).to.equal(123);
+        const accountStoredEvent = await findEventTopicLog(results.applyTx, updatedPlugin.interface, "AccountStored");
         expect(accountStoredEvent.args.account).to.equal(ADDRESS_ONE);
       });
     });
