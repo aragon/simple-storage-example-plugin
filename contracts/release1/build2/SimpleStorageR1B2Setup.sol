@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.8;
 
-import { PermissionLib } from "@aragon/osx/core/permission/PermissionLib.sol";
-import { PluginSetup, IPluginSetup } from "@aragon/osx/framework/plugin/setup/PluginSetup.sol";
-import { SimpleStorageR1B2 } from "./SimpleStorageR1B2.sol";
+import {PermissionLib} from "@aragon/osx/core/permission/PermissionLib.sol";
+import {PluginSetup, IPluginSetup} from "@aragon/osx/framework/plugin/setup/PluginSetup.sol";
+import {SimpleStorageR1B2} from "./SimpleStorageR1B2.sol";
 
 /// @title SimpleStorageSetup build 2
 contract SimpleStorageR1B2Setup is PluginSetup {
@@ -23,10 +23,16 @@ contract SimpleStorageR1B2Setup is PluginSetup {
 
         plugin = createERC1967Proxy(
             simpleStorageImplementation,
-            abi.encodeWithSelector(SimpleStorageR1B2.initializeBuild2.selector, _dao, _number, _account)
+            abi.encodeWithSelector(
+                SimpleStorageR1B2.initializeBuild2.selector,
+                _dao,
+                _number,
+                _account
+            )
         );
 
-        PermissionLib.MultiTargetPermission[] memory permissions = new PermissionLib.MultiTargetPermission[](1);
+        PermissionLib.MultiTargetPermission[]
+            memory permissions = new PermissionLib.MultiTargetPermission[](1);
 
         permissions[0] = PermissionLib.MultiTargetPermission({
             operation: PermissionLib.Operation.Grant,
@@ -44,12 +50,20 @@ contract SimpleStorageR1B2Setup is PluginSetup {
         address _dao,
         uint16 _currentBuild,
         SetupPayload calldata _payload
-    ) external pure override returns (bytes memory initData, PreparedSetupData memory preparedSetupData) {
+    )
+        external
+        pure
+        override
+        returns (bytes memory initData, PreparedSetupData memory preparedSetupData)
+    {
         (_dao, preparedSetupData);
 
         if (_currentBuild == 1) {
             address _account = abi.decode(_payload.data, (address));
-            initData = abi.encodeWithSelector(SimpleStorageR1B2.initializeFromBuild1.selector, _account);
+            initData = abi.encodeWithSelector(
+                SimpleStorageR1B2.initializeFromBuild1.selector,
+                _account
+            );
         }
     }
 

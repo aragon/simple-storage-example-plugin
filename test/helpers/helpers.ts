@@ -1,22 +1,26 @@
-import { expect } from "chai";
-import { ContractFactory, ContractTransaction } from "ethers";
-import "ethers";
-import { Interface, LogDescription, defaultAbiCoder, keccak256 } from "ethers/lib/utils";
-import { ethers } from "hardhat";
-import { upgrades } from "hardhat";
-import IPFS from "ipfs-http-client";
-
-import { DAO, IPlugin, PluginSetupProcessor } from "../../types";
+import {DAO, IPlugin, PluginSetupProcessor} from '../../types';
 import {
   InstallationPreparedEvent,
   UninstallationPreparedEvent,
   UpdateAppliedEvent,
   UpdatePreparedEvent,
-} from "../../types/@aragon/osx/framework/plugin/setup/PluginSetupProcessor";
-import { PluginSetupRef } from "./types";
+} from '../../types/@aragon/osx/framework/plugin/setup/PluginSetupProcessor';
+import {PluginSetupRef} from './types';
+import {expect} from 'chai';
+import {ContractFactory, ContractTransaction} from 'ethers';
+import 'ethers';
+import {
+  Interface,
+  LogDescription,
+  defaultAbiCoder,
+  keccak256,
+} from 'ethers/lib/utils';
+import {ethers} from 'hardhat';
+import {upgrades} from 'hardhat';
+import IPFS from 'ipfs-http-client';
 
 export const ERRORS = {
-  ALREADY_INITIALIZED: "Initializable: contract is already initialized",
+  ALREADY_INITIALIZED: 'Initializable: contract is already initialized',
 };
 
 export function toBytes(string: string) {
@@ -24,13 +28,13 @@ export function toBytes(string: string) {
 }
 
 export function hashHelpers(helpers: string[]) {
-  return keccak256(defaultAbiCoder.encode(["address[]"], [helpers]));
+  return keccak256(defaultAbiCoder.encode(['address[]'], [helpers]));
 }
 
 export async function findEvent<T>(tx: ContractTransaction, eventName: string) {
   const receipt = await tx.wait();
 
-  const event = (receipt.events || []).find((event) => event.event === eventName);
+  const event = (receipt.events || []).find(event => event.event === eventName);
 
   return event as T | undefined;
 }
@@ -38,11 +42,11 @@ export async function findEvent<T>(tx: ContractTransaction, eventName: string) {
 export async function findEventTopicLog(
   tx: ContractTransaction,
   iface: Interface,
-  eventName: string,
+  eventName: string
 ): Promise<LogDescription> {
   const receipt = await tx.wait();
   const topic = iface.getEventTopic(eventName);
-  const log = receipt.logs.find((x) => x.topics.indexOf(topic) >= 0);
+  const log = receipt.logs.find(x => x.topics.indexOf(topic) >= 0);
   if (!log) {
     throw new Error(`No logs found for this event ${eventName} topic.`);
   }
@@ -50,15 +54,18 @@ export async function findEventTopicLog(
 }
 
 // This is to remove unnecessary properties from the output type. Use it eg. `ExtractPropsFromArray<Inventory.ItemStructOutput>`
-export type ExtractPropsFromArray<T> = Omit<T, keyof Array<unknown> | `${number}`>;
+export type ExtractPropsFromArray<T> = Omit<
+  T,
+  keyof Array<unknown> | `${number}`
+>;
 
 export async function getTime(): Promise<number> {
-  return (await ethers.provider.getBlock("latest")).timestamp;
+  return (await ethers.provider.getBlock('latest')).timestamp;
 }
 
 export async function advanceTime(time: number) {
-  await ethers.provider.send("evm_increaseTime", [time]);
-  await ethers.provider.send("evm_mine", []);
+  await ethers.provider.send('evm_increaseTime', [time]);
+  await ethers.provider.send('evm_mine', []);
 }
 
 export async function advanceTimeTo(timestamp: number) {
@@ -70,16 +77,19 @@ export async function installPLugin(
   psp: PluginSetupProcessor,
   dao: DAO,
   pluginSetupRef: PluginSetupRef,
-  data: string,
+  data: string
 ): Promise<string> {
   const tx = await psp.prepareInstallation(dao.address, {
     pluginSetupRef: pluginSetupRef,
     data: data,
   });
 
-  const preparedEvent = await findEvent<InstallationPreparedEvent>(tx, "InstallationPrepared");
+  const preparedEvent = await findEvent<InstallationPreparedEvent>(
+    tx,
+    'InstallationPrepared'
+  );
   if (!preparedEvent) {
-    throw new Error("Failed to get InstallationPrepared event");
+    throw new Error('Failed to get InstallationPrepared event');
   }
 
   await expect(
@@ -88,8 +98,8 @@ export async function installPLugin(
       plugin: preparedEvent.args.plugin,
       permissions: preparedEvent.args.preparedSetupData.permissions,
       helpersHash: hashHelpers(preparedEvent.args.preparedSetupData.helpers),
-    }),
-  ).to.emit(psp, "InstallationApplied");
+    })
+  ).to.emit(psp, 'InstallationApplied');
 
   return preparedEvent.args.plugin;
 }
@@ -100,7 +110,7 @@ export async function uninstallPLugin(
   plugin: IPlugin,
   pluginSetupRef: PluginSetupRef,
   data: string,
-  currentHelpers: string[],
+  currentHelpers: string[]
 ) {
   const tx = await psp.prepareUninstallation(dao.address, {
     pluginSetupRef: pluginSetupRef,
@@ -111,9 +121,12 @@ export async function uninstallPLugin(
     },
   });
 
-  const preparedEvent = await findEvent<UninstallationPreparedEvent>(tx, "UninstallationPrepared");
+  const preparedEvent = await findEvent<UninstallationPreparedEvent>(
+    tx,
+    'UninstallationPrepared'
+  );
   if (!preparedEvent) {
-    throw new Error("Failed to get UninstallationPrepared event");
+    throw new Error('Failed to get UninstallationPrepared event');
   }
 
   const preparedPermissions = preparedEvent.args.permissions;
@@ -123,8 +136,8 @@ export async function uninstallPLugin(
       plugin: plugin.address,
       pluginSetupRef: pluginSetupRef,
       permissions: preparedPermissions,
-    }),
-  ).to.emit(psp, "UninstallationApplied");
+    })
+  ).to.emit(psp, 'UninstallationApplied');
 }
 
 export async function updatePlugin(
@@ -134,12 +147,14 @@ export async function updatePlugin(
   currentHelpers: string[],
   pluginSetupRefCurrent: PluginSetupRef,
   pluginSetupRefUpdate: PluginSetupRef,
-  data: string,
+  data: string
 ): Promise<{
   prepareTx: ContractTransaction;
   applyTx: ContractTransaction;
 }> {
-  expect(pluginSetupRefCurrent.pluginSetupRepo).to.equal(pluginSetupRefUpdate.pluginSetupRepo);
+  expect(pluginSetupRefCurrent.pluginSetupRepo).to.equal(
+    pluginSetupRefUpdate.pluginSetupRepo
+  );
 
   const prepareTx = await psp.prepareUpdate(dao.address, {
     currentVersionTag: pluginSetupRefCurrent.versionTag,
@@ -151,9 +166,12 @@ export async function updatePlugin(
       data: data,
     },
   });
-  const preparedEvent = await findEvent<UpdatePreparedEvent>(prepareTx, "UpdatePrepared");
+  const preparedEvent = await findEvent<UpdatePreparedEvent>(
+    prepareTx,
+    'UpdatePrepared'
+  );
   if (!preparedEvent) {
-    throw new Error("Failed to get UpdatePrepared event");
+    throw new Error('Failed to get UpdatePrepared event');
   }
 
   const applyTx = await psp.applyUpdate(dao.address, {
@@ -163,19 +181,22 @@ export async function updatePlugin(
     permissions: preparedEvent.args.preparedSetupData.permissions,
     helpersHash: hashHelpers(preparedEvent.args.preparedSetupData.helpers),
   });
-  const appliedEvent = await findEvent<UpdateAppliedEvent>(applyTx, "UpdateApplied");
+  const appliedEvent = await findEvent<UpdateAppliedEvent>(
+    applyTx,
+    'UpdateApplied'
+  );
   if (!appliedEvent) {
-    throw new Error("Failed to get UpdateApplied event");
+    throw new Error('Failed to get UpdateApplied event');
   }
 
-  return { prepareTx, applyTx };
+  return {prepareTx, applyTx};
 }
 
 export async function uploadToIPFS(metadata: string): Promise<string> {
   const client = IPFS.create({
-    url: "https://testing-ipfs-0.aragon.network/api/v0",
+    url: 'https://testing-ipfs-0.aragon.network/api/v0',
     headers: {
-      "X-API-KEY": "b477RhECf8s8sdM7XrkLBs2wHc4kCMwpbcFC55Kt",
+      'X-API-KEY': 'b477RhECf8s8sdM7XrkLBs2wHc4kCMwpbcFC55Kt',
     },
   });
 
@@ -186,16 +207,19 @@ export async function uploadToIPFS(metadata: string): Promise<string> {
 
 type DeployOptions = {
   constructurArgs?: unknown[];
-  proxyType?: "uups";
+  proxyType?: 'uups';
 };
 
-export async function deployWithProxy<T>(contractFactory: ContractFactory, options: DeployOptions = {}): Promise<T> {
+export async function deployWithProxy<T>(
+  contractFactory: ContractFactory,
+  options: DeployOptions = {}
+): Promise<T> {
   upgrades.silenceWarnings(); // Needed because we pass the `unsafeAllow: ["constructor"]` option.
 
   return upgrades.deployProxy(contractFactory, [], {
-    kind: options.proxyType || "uups",
+    kind: options.proxyType || 'uups',
     initializer: false,
-    unsafeAllow: ["constructor"],
+    unsafeAllow: ['constructor'],
     constructorArgs: options.constructurArgs || [],
   }) as unknown as Promise<T>;
 }

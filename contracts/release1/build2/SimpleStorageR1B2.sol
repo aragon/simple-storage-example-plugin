@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity ^0.8.8;
 
-import { IDAO, PluginUUPSUpgradeable } from "@aragon/osx/core/plugin/PluginUUPSUpgradeable.sol";
+import {IDAO, PluginUUPSUpgradeable} from "@aragon/osx/core/plugin/PluginUUPSUpgradeable.sol";
 
 /// @title SimpleStorage build 2
 contract SimpleStorageR1B2 is PluginUUPSUpgradeable {
@@ -11,7 +11,11 @@ contract SimpleStorageR1B2 is PluginUUPSUpgradeable {
     address public account; // added in build 2
 
     /// @notice Initializes the plugin when build 2 is installed.
-    function initializeBuild2(IDAO _dao, uint256 _number, address _account) external reinitializer(2) {
+    function initializeBuild2(
+        IDAO _dao,
+        uint256 _number,
+        address _account
+    ) external reinitializer(2) {
         __PluginUUPSUpgradeable_init(_dao);
         number = _number;
         account = _account;
