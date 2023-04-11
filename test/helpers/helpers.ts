@@ -173,7 +173,7 @@ export async function updatePlugin(
 
 export async function uploadToIPFS(metadata: string): Promise<string> {
   const client = IPFS.create({
-    url: "https://ipfs-0.aragon.network/api/v0",
+    url: "https://testing-ipfs-0.aragon.network/api/v0",
     headers: {
       "X-API-KEY": "yRERPRwFAb5ZiV94XvJdgvDKoGEeFerfFsAQ65",
     },
