@@ -1,5 +1,4 @@
 import './tasks/accounts';
-import './tasks/deploy';
 import '@nomicfoundation/hardhat-toolbox';
 import '@openzeppelin/hardhat-upgrades';
 import {config as dotenvConfig} from 'dotenv';
