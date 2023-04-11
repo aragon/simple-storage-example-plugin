@@ -9,8 +9,6 @@ export async function deployDao(signer: SignerWithAddress): Promise<[DAO, Admin]
   const DAO = new DAO__factory(signer);
   const dao = await deployWithProxy<DAO>(DAO);
 
-  await deployWithProxy<DAO>(DAO);
-
   const daoExampleURI = "https://example.com";
 
   await dao.initialize(EMPTY_DATA, signer.address, ADDRESS_ZERO, daoExampleURI);

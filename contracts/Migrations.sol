@@ -2,6 +2,8 @@
 
 pragma solidity 0.8.17;
 
+// Import all contracts from other repositories to make the openzeppelin-upgrades package work to deploy things.
+// See related issue here https://github.com/OpenZeppelin/openzeppelin-upgrades/issues/86
 import { Admin } from "@aragon/osx/plugins/governance/admin/Admin.sol";
 import { PluginSetupProcessor } from "@aragon/osx/framework/plugin/setup/PluginSetupProcessor.sol";
 import { PluginRepoFactory } from "@aragon/osx/framework/plugin/repo/PluginRepoFactory.sol";

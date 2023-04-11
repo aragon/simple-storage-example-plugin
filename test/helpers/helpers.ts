@@ -175,7 +175,7 @@ export async function uploadToIPFS(metadata: string): Promise<string> {
   const client = IPFS.create({
     url: "https://testing-ipfs-0.aragon.network/api/v0",
     headers: {
-      "X-API-KEY": "yRERPRwFAb5ZiV94XvJdgvDKoGEeFerfFsAQ65",
+      "X-API-KEY": "b477RhECf8s8sdM7XrkLBs2wHc4kCMwpbcFC55Kt",
     },
   });
 
