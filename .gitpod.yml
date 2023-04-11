@@ -2,10 +2,10 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: "pnpm install"
+  - init: 'yarn install'
 
 vscode:
   extensions:
-    - "esbenp.prettier-vscode"
-    - "NomicFoundation.hardhat-solidity"
-    - "ritwickdey.LiveServer"
+    - 'esbenp.prettier-vscode'
+    - 'NomicFoundation.hardhat-solidity'
+    - 'ritwickdey.LiveServer'

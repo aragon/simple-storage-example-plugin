@@ -2,10 +2,10 @@
 
 pragma solidity ^0.8.8;
 
-import { PermissionLib } from "@aragon/osx/core/permission/PermissionLib.sol";
-import { PluginSetup, IPluginSetup } from "@aragon/osx/framework/plugin/setup/PluginSetup.sol";
-import { SimpleStorageR1B2 } from "../build2/SimpleStorageR1B2.sol";
-import { SimpleStorageR1B3 } from "./SimpleStorageR1B3.sol";
+import {PermissionLib} from "@aragon/osx/core/permission/PermissionLib.sol";
+import {PluginSetup, IPluginSetup} from "@aragon/osx/framework/plugin/setup/PluginSetup.sol";
+import {SimpleStorageR1B2} from "../build2/SimpleStorageR1B2.sol";
+import {SimpleStorageR1B3} from "./SimpleStorageR1B3.sol";
 
 /// @title SimpleStorageSetup build 3
 contract SimpleStorageR1B3Setup is PluginSetup {
@@ -24,10 +24,16 @@ contract SimpleStorageR1B3Setup is PluginSetup {
 
         plugin = createERC1967Proxy(
             simpleStorageImplementation,
-            abi.encodeWithSelector(SimpleStorageR1B3.initializeBuild3.selector, _dao, _number, _account)
+            abi.encodeWithSelector(
+                SimpleStorageR1B3.initializeBuild3.selector,
+                _dao,
+                _number,
+                _account
+            )
         );
 
-        PermissionLib.MultiTargetPermission[] memory permissions = new PermissionLib.MultiTargetPermission[](2);
+        PermissionLib.MultiTargetPermission[]
+            memory permissions = new PermissionLib.MultiTargetPermission[](2);
 
         permissions[0] = PermissionLib.MultiTargetPermission({
             operation: PermissionLib.Operation.Grant,
@@ -53,15 +59,24 @@ contract SimpleStorageR1B3Setup is PluginSetup {
         address _dao,
         uint16 _currentBuild,
         SetupPayload calldata _payload
-    ) external pure override returns (bytes memory initData, PreparedSetupData memory preparedSetupData) {
+    )
+        external
+        pure
+        override
+        returns (bytes memory initData, PreparedSetupData memory preparedSetupData)
+    {
         if (_currentBuild == 1) {
             address _account = abi.decode(_payload.data, (address));
-            initData = abi.encodeWithSelector(SimpleStorageR1B3.initializeFromBuild1.selector, _account);
+            initData = abi.encodeWithSelector(
+                SimpleStorageR1B3.initializeFromBuild1.selector,
+                _account
+            );
         } else if (_currentBuild == 2) {
             initData = abi.encodeWithSelector(SimpleStorageR1B3.initializeFromBuild2.selector);
         }
 
-        PermissionLib.MultiTargetPermission[] memory permissions = new PermissionLib.MultiTargetPermission[](3);
+        PermissionLib.MultiTargetPermission[]
+            memory permissions = new PermissionLib.MultiTargetPermission[](3);
         permissions[0] = PermissionLib.MultiTargetPermission({
             operation: PermissionLib.Operation.Revoke,
             where: _dao,
