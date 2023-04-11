@@ -1,6 +1,7 @@
 import "@nomicfoundation/hardhat-toolbox";
 import "@openzeppelin/hardhat-upgrades";
 import { config as dotenvConfig } from "dotenv";
+import { ethers } from "ethers";
 import type { HardhatUserConfig } from "hardhat/config";
 import type { NetworkUserConfig } from "hardhat/types";
 import { resolve } from "path";
@@ -11,64 +12,70 @@ import "./tasks/deploy";
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
 
-// Ensure that we have all the environment variables we need.
-const mnemonic: string | undefined = process.env.MNEMONIC;
-if (!mnemonic) {
-  throw new Error("Please set your MNEMONIC in a .env file");
+if (!process.env.INFURA_API_KEY) {
+  throw new Error("INFURA_API_KEY in .env not set");
 }
 
-const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
-if (!infuraApiKey) {
-  throw new Error("Please set your INFURA_API_KEY in a .env file");
-}
-
-const chainIds = {
-  "arbitrum-mainnet": 42161,
-  avalanche: 43114,
-  bsc: 56,
-  hardhat: 31337,
-  mainnet: 1,
-  "optimism-mainnet": 10,
-  "polygon-mainnet": 137,
-  "polygon-mumbai": 80001,
-  sepolia: 11155111,
+const networks: { [index: string]: NetworkUserConfig } = {
+  arbitrumMainnet: {
+    chainId: 42161,
+    url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+  },
+  arbitrumGoerli: {
+    chainId: 42161,
+    url: `https://arbitrum-goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
+  },
+  hardhat: {
+    chainId: 31337,
+    forking: {
+      url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    },
+  },
+  mainnet: {
+    chainId: 1,
+    url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+  },
+  goerli: {
+    chainId: 5,
+    url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
+  },
+  polygon: {
+    chainId: 137,
+    url: `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+  },
+  polygonMumbai: {
+    chainId: 80001,
+    url: `https://polygon-mumbai.infura.io/v3/${process.env.INFURA_API_KEY}`,
+  },
 };
 
-function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
-  let jsonRpcUrl: string;
-  switch (chain) {
-    case "avalanche":
-      jsonRpcUrl = "https://api.avax.network/ext/bc/C/rpc";
-      break;
-    case "bsc":
-      jsonRpcUrl = "https://bsc-dataseed1.binance.org";
-      break;
-    default:
-      jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + infuraApiKey;
+// uses hardhats private key if none is set. DON'T USE THIS ACCOUNT FOR DEPLOYMENTS
+const accounts = process.env.ETH_KEY
+  ? process.env.ETH_KEY.split(",")
+  : ["0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"];
+
+for (const network in networks) {
+  // special treatement for hardhat
+  if (network === "hardhat") {
+    networks[network].accounts = accounts.map((account) => ({
+      privateKey: account,
+      balance: ethers.utils.parseEther("1000").toString(),
+    }));
+    continue;
   }
-  return {
-    accounts: {
-      count: 10,
-      mnemonic,
-      path: "m/44'/60'/0'/0",
-    },
-    chainId: chainIds[chain],
-    url: jsonRpcUrl,
-  };
+  networks[network].accounts = accounts;
 }
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   etherscan: {
     apiKey: {
-      arbitrumOne: process.env.ARBISCAN_API_KEY || "",
-      avalanche: process.env.SNOWTRACE_API_KEY || "",
-      bsc: process.env.BSCSCAN_API_KEY || "",
+      arbitrumMainnet: process.env.ARBISCAN_API_KEY || "",
+      arbitrumGoerli: process.env.ARBISCAN_API_KEY || "",
       mainnet: process.env.ETHERSCAN_API_KEY || "",
-      optimisticEthereum: process.env.OPTIMISM_API_KEY || "",
+      goerli: process.env.ETHERSCAN_API_KEY || "",
       polygon: process.env.POLYGONSCAN_API_KEY || "",
       polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
-      sepolia: process.env.ETHERSCAN_API_KEY || "",
     },
   },
   gasReporter: {
@@ -78,25 +85,7 @@ const config: HardhatUserConfig = {
     src: "./contracts",
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
   },
-  networks: {
-    hardhat: {
-      accounts: {
-        mnemonic,
-      },
-      forking: {
-        url: "https://mainnet.infura.io/v3/" + process.env.INFURA_API_KEY,
-      },
-      chainId: chainIds.hardhat,
-    },
-    arbitrum: getChainConfig("arbitrum-mainnet"),
-    avalanche: getChainConfig("avalanche"),
-    bsc: getChainConfig("bsc"),
-    mainnet: getChainConfig("mainnet"),
-    optimism: getChainConfig("optimism-mainnet"),
-    "polygon-mainnet": getChainConfig("polygon-mainnet"),
-    "polygon-mumbai": getChainConfig("polygon-mumbai"),
-    sepolia: getChainConfig("sepolia"),
-  },
+  networks,
   paths: {
     artifacts: "./artifacts",
     cache: "./cache",
