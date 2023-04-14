@@ -3,7 +3,7 @@ pragma solidity ^0.8.8;
 
 import {IDAO, PluginUUPSUpgradeable} from "@aragon/osx/core/plugin/PluginUUPSUpgradeable.sol";
 
-/// @title SimpleStorage build 1
+/// @title SimpleStorage Release 1, Build 1
 contract SimpleStorageR1B1 is PluginUUPSUpgradeable {
     bytes32 public constant STORE_PERMISSION_ID = keccak256("STORE_PERMISSION");
 
@@ -16,7 +16,7 @@ contract SimpleStorageR1B1 is PluginUUPSUpgradeable {
     }
 
     /// @notice Stores a new number to storage. Caller needs STORE_PERMISSION.
-    /// @param _number Number to store on storage.
+    /// @param _number The number to be stored.
     function storeNumber(uint256 _number) external auth(STORE_PERMISSION_ID) {
         number = _number;
     }
