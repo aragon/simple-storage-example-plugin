@@ -11,6 +11,8 @@ contract SimpleStorageR1B2 is PluginUUPSUpgradeable {
     address public account; // added in build 2
 
     /// @notice Initializes the plugin when build 2 is installed.
+    /// @param _number The number to be stored.
+    /// @param _account The account to be stored.
     function initializeBuild2(
         IDAO _dao,
         uint256 _number,
@@ -23,6 +25,7 @@ contract SimpleStorageR1B2 is PluginUUPSUpgradeable {
 
     /// @notice Initializes the plugin when the update from build 1 to build 2 is applied.
     /// @dev The initialization of `SimpleStorageR1B1` has already happened.
+    /// @param _account The account to be stored.
     function initializeFromBuild1(address _account) external reinitializer(2) {
         account = _account;
     }
