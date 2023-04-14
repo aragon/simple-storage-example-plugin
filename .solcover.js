@@ -1,7 +1,7 @@
 module.exports = {
   istanbulReporter: ['html', 'lcov'],
   providerOptions: {
-    mnemonic: process.env.MNEMONIC,
+    privateKey: process.env.PRIVATE_KEY,
   },
   skipFiles: ['test'],
 };

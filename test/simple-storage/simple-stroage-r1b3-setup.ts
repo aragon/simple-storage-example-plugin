@@ -8,13 +8,13 @@ import {
   SimpleStorageR1B3Setup,
   SimpleStorageR1B3Setup__factory,
   SimpleStorageR1B3__factory,
-} from '../../types';
-import {deployDao} from '../helpers/test-dao';
+} from '../../typechain';
+import {deployTestDao} from '../helpers/test-dao';
+import {Operation} from '../helpers/types';
 import {
   ADDRESS_ONE,
   EMPTY_DATA,
   NO_CONDITION,
-  Operation,
   STORE_ACCOUNT_PERMISSION_ID,
   STORE_NUMBER_PERMISSION_ID,
   STORE_PERMISSION_ID,
@@ -34,7 +34,7 @@ describe('SimpleStorageR1B3Setup', function () {
 
   before(async () => {
     signers = await ethers.getSigners();
-    [dao] = await deployDao(signers[0]);
+    dao = await deployTestDao(signers[0]);
 
     SimpleStorageR1B3Setup = new SimpleStorageR1B3Setup__factory(signers[0]);
     simpleStorageR1B3Setup = await SimpleStorageR1B3Setup.deploy();
@@ -226,8 +226,7 @@ describe('SimpleStorageR1B3Setup', function () {
 
         const expectedInitData =
           SimpleStorageR1B3__factory.createInterface().encodeFunctionData(
-            'initializeFromBuild2',
-            []
+            'initializeFromBuild2'
           );
 
         expect(initData).to.be.equal(expectedInitData);

@@ -1,6 +1,10 @@
-import {DAO, SimpleStorageR1B1, SimpleStorageR1B1__factory} from '../../types';
-import {deployWithProxy} from '../helpers/helpers';
-import {deployDao} from '../helpers/test-dao';
+import {
+  DAO,
+  SimpleStorageR1B1,
+  SimpleStorageR1B1__factory,
+} from '../../typechain';
+import {deployWithProxy} from '../../utils/helpers';
+import {deployTestDao} from '../helpers/test-dao';
 import {STORE_PERMISSION_ID} from './simple-storage-common';
 import {SignerWithAddress} from '@nomiclabs/hardhat-ethers/signers';
 import {expect} from 'chai';
@@ -21,7 +25,7 @@ describe('SimpleStorageR1B1', function () {
 
   before(async () => {
     signers = await ethers.getSigners();
-    [dao] = await deployDao(signers[0]);
+    dao = await deployTestDao(signers[0]);
 
     defaultInput = {number: BigNumber.from(123)};
 

@@ -1,6 +1,10 @@
-import {DAO, SimpleStorageR1B2, SimpleStorageR1B2__factory} from '../../types';
-import {deployWithProxy} from '../helpers/helpers';
-import {deployDao} from '../helpers/test-dao';
+import {
+  DAO,
+  SimpleStorageR1B2,
+  SimpleStorageR1B2__factory,
+} from '../../typechain';
+import {deployWithProxy} from '../../utils/helpers';
+import {deployTestDao} from '../helpers/test-dao';
 import {
   ADDRESS_ONE,
   ADDRESS_TWO,
@@ -27,7 +31,7 @@ describe('SimpleStorageR1B2', async function () {
 
   before(async () => {
     signers = await ethers.getSigners();
-    [dao] = await deployDao(signers[0]);
+    dao = await deployTestDao(signers[0]);
 
     defaultInput = {
       number: BigNumber.from(123),

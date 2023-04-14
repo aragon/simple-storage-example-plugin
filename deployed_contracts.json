@@ -1,0 +1,8 @@
+{
+  "goerli": {
+    "SimpleStorageR1B1Setup": "0xe50953d06215420276D147dce9C6986C518968D5",
+    "SimpleStorageR1B2Setup": "0x818E2f0D243FB841b765Eee2aA2CC7Ec93f05320",
+    "SimpleStorageR1B3Setup": "0x604570fA0f83785ea925575d165725170eC316Cc",
+    "PluginRepo": "0x95B2c863Cb13542b3c4973Ad0CDAc7c895B6254f"
+  }
+}

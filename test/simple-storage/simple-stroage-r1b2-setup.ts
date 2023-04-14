@@ -6,13 +6,13 @@ import {
   SimpleStorageR1B2Setup,
   SimpleStorageR1B2Setup__factory,
   SimpleStorageR1B2__factory,
-} from '../../types';
-import {deployDao} from '../helpers/test-dao';
+} from '../../typechain';
+import {deployTestDao} from '../helpers/test-dao';
+import {Operation} from '../helpers/types';
 import {
   ADDRESS_ONE,
   EMPTY_DATA,
   NO_CONDITION,
-  Operation,
   STORE_PERMISSION_ID,
   abiCoder,
 } from './simple-storage-common';
@@ -29,7 +29,7 @@ describe('SimpleStorageR1B2Setup', function () {
 
   before(async () => {
     signers = await ethers.getSigners();
-    [dao] = await deployDao(signers[0]);
+    dao = await deployTestDao(signers[0]);
 
     SimpleStorageR1B2Setup = new SimpleStorageR1B2Setup__factory(signers[0]);
     simpleStorageR1B2Setup = await SimpleStorageR1B2Setup.deploy();

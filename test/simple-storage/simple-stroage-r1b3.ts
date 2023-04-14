@@ -1,11 +1,15 @@
-import {DAO, SimpleStorageR1B3, SimpleStorageR1B3__factory} from '../../types';
+import {
+  DAO,
+  SimpleStorageR1B3,
+  SimpleStorageR1B3__factory,
+} from '../../typechain';
 import {
   AccountStoredEvent,
   NumberStoredEvent,
-} from '../../types/contracts/release1/build3/SimpleStorageR1B3';
-import {findEvent} from '../helpers/helpers';
-import {deployWithProxy} from '../helpers/helpers';
-import {deployDao} from '../helpers/test-dao';
+} from '../../typechain/contracts/release1/build3/SimpleStorageR1B3';
+import {findEvent} from '../../utils/helpers';
+import {deployWithProxy} from '../../utils/helpers';
+import {deployTestDao} from '../helpers/test-dao';
 import {
   ADDRESS_TWO,
   STORE_ACCOUNT_PERMISSION_ID,
@@ -30,7 +34,7 @@ describe('SimpleStorageR1B3', async function () {
 
   before(async () => {
     signers = await ethers.getSigners();
-    [dao] = await deployDao(signers[0]);
+    dao = await deployTestDao(signers[0]);
 
     defaultInput = {
       number: BigNumber.from(123),

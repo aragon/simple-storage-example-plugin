@@ -1,6 +1,6 @@
 {
   "ui": "",
-  "change": "",
+  "change": "Initial build.",
   "pluginSetupABI": {
     "prepareInstallation": ["uint256 number"],
     "prepareUpdate": [],

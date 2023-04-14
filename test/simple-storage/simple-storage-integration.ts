@@ -1,6 +1,7 @@
 import buildMetadata1 from '../../contracts/release1/build1/build-metadata.json';
 import buildMetadata2 from '../../contracts/release1/build2/build-metadata.json';
 import buildMetadata3 from '../../contracts/release1/build3/build-metadata.json';
+import releaseMetadata1 from '../../contracts/release1/release-metadata.json';
 import {
   DAO,
   PluginRepo,
@@ -17,20 +18,19 @@ import {
   SimpleStorageR1B3Setup,
   SimpleStorageR1B3Setup__factory,
   SimpleStorageR1B3__factory,
-} from '../../types';
-import {
-  createPluginRepo,
-  createPluginSetupProcessor,
-} from '../helpers/deploy-plugin-repo';
-import {
-  findEventTopicLog,
-  installPLugin,
-  uninstallPLugin,
-  updatePlugin,
-} from '../helpers/helpers';
-import {deployDao} from '../helpers/test-dao';
-import {PluginSetupRef} from '../helpers/types';
+} from '../../typechain';
+import {PluginSetupRefStruct} from '../../typechain/@aragon/osx/framework/plugin/setup/PluginSetupProcessor';
+import {findEventTopicLog, osxContracts} from '../../utils/helpers';
+import {toHex, uploadToIPFS} from '../../utils/ipfs-upload';
+import {installPLugin, uninstallPLugin, updatePlugin} from '../helpers/setup';
+import {deployTestDao} from '../helpers/test-dao';
+import {createPluginSetupProcessor} from '../helpers/test-psp';
 import {ADDRESS_ONE} from './simple-storage-common';
+import {
+  PluginRepoFactory__factory,
+  PluginRepoRegistry__factory,
+  PluginRepo__factory,
+} from '@aragon/osx-ethers';
 import {SignerWithAddress} from '@nomiclabs/hardhat-ethers/signers';
 import {expect} from 'chai';
 import {BigNumber} from 'ethers';
@@ -46,15 +46,15 @@ describe('SimpleStorage Integration', function () {
   let simpleStorageR1B2Setup: SimpleStorageR1B2Setup;
   let simpleStorageR1B3Setup: SimpleStorageR1B3Setup;
 
-  let pluginSetupRefR1B1: PluginSetupRef;
-  let pluginSetupRefR1B2: PluginSetupRef;
-  let pluginSetupRefR1B3: PluginSetupRef;
+  let pluginSetupRefR1B1: PluginSetupRefStruct;
+  let pluginSetupRefR1B2: PluginSetupRefStruct;
+  let pluginSetupRefR1B3: PluginSetupRefStruct;
 
   before(async () => {
     signers = await ethers.getSigners();
 
     // Deploy DAO.
-    [dao] = await deployDao(signers[0]);
+    dao = await deployTestDao(signers[0]);
 
     // Deploy setups.
     simpleStorageR1B1Setup = await new SimpleStorageR1B1Setup__factory(
@@ -68,11 +68,16 @@ describe('SimpleStorage Integration', function () {
     ).deploy();
 
     // Create the plugin repo
-    pluginRepo = await createPluginRepo(signers[0], 'simple-storage', [
-      simpleStorageR1B1Setup.address,
-      simpleStorageR1B2Setup.address,
-      simpleStorageR1B3Setup.address,
-    ]);
+    pluginRepo = await populateSimpleStoragePluginRepo(
+      signers[0],
+      osxContracts.mainnet.PluginRepoFactory,
+      'simple-storage',
+      [
+        simpleStorageR1B1Setup.address,
+        simpleStorageR1B2Setup.address,
+        simpleStorageR1B3Setup.address,
+      ]
+    );
 
     pluginSetupRefR1B1 = {
       versionTag: {
@@ -121,16 +126,18 @@ describe('SimpleStorage Integration', function () {
 
       beforeEach(async () => {
         // Install build 1.
-        plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
-          await installPLugin(
-            psp,
-            dao,
-            pluginSetupRefR1B1,
-            ethers.utils.defaultAbiCoder.encode(
-              buildMetadata1.pluginSetupABI.prepareInstallation,
-              [123]
-            )
+        const results = await installPLugin(
+          psp,
+          dao,
+          pluginSetupRefR1B1,
+          ethers.utils.defaultAbiCoder.encode(
+            buildMetadata1.pluginSetupABI.prepareInstallation,
+            [123]
           )
+        );
+
+        plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
+          results.preparedEvent.args.plugin
         );
       });
 
@@ -163,16 +170,19 @@ describe('SimpleStorage Integration', function () {
 
       beforeEach(async () => {
         // Install build 2.
-        plugin = new SimpleStorageR1B2__factory(signers[0]).attach(
-          await installPLugin(
-            psp,
-            dao,
-            pluginSetupRefR1B2,
-            ethers.utils.defaultAbiCoder.encode(
-              buildMetadata2.pluginSetupABI.prepareInstallation,
-              [123, ADDRESS_ONE]
-            )
+
+        const results = await installPLugin(
+          psp,
+          dao,
+          pluginSetupRefR1B2,
+          ethers.utils.defaultAbiCoder.encode(
+            buildMetadata2.pluginSetupABI.prepareInstallation,
+            [123, ADDRESS_ONE]
           )
+        );
+
+        plugin = new SimpleStorageR1B2__factory(signers[0]).attach(
+          results.preparedEvent.args.plugin
         );
       });
 
@@ -202,16 +212,17 @@ describe('SimpleStorage Integration', function () {
 
       it('updates from build 1', async () => {
         // Install build 1.
-        const plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
-          await installPLugin(
-            psp,
-            dao,
-            pluginSetupRefR1B1,
-            ethers.utils.defaultAbiCoder.encode(
-              buildMetadata1.pluginSetupABI.prepareInstallation,
-              [123]
-            )
+        const results = await installPLugin(
+          psp,
+          dao,
+          pluginSetupRefR1B1,
+          ethers.utils.defaultAbiCoder.encode(
+            buildMetadata1.pluginSetupABI.prepareInstallation,
+            [123]
           )
+        );
+        const plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
+          results.preparedEvent.args.plugin
         );
 
         // Grant permission to upgrade.
@@ -256,16 +267,18 @@ describe('SimpleStorage Integration', function () {
 
       beforeEach(async () => {
         // Install build 3.
-        plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          await installPLugin(
-            psp,
-            dao,
-            pluginSetupRefR1B3,
-            ethers.utils.defaultAbiCoder.encode(
-              buildMetadata3.pluginSetupABI.prepareInstallation,
-              [123, ADDRESS_ONE]
-            )
+        const results = await installPLugin(
+          psp,
+          dao,
+          pluginSetupRefR1B3,
+          ethers.utils.defaultAbiCoder.encode(
+            buildMetadata3.pluginSetupABI.prepareInstallation,
+            [123, ADDRESS_ONE]
           )
+        );
+
+        plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
+          results.preparedEvent.args.plugin
         );
       });
 
@@ -295,16 +308,18 @@ describe('SimpleStorage Integration', function () {
 
       it('updates from build 1', async () => {
         // Install build 1.
-        const plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
-          await installPLugin(
-            psp,
-            dao,
-            pluginSetupRefR1B1,
-            ethers.utils.defaultAbiCoder.encode(
-              buildMetadata1.pluginSetupABI.prepareInstallation,
-              [123]
-            )
+        const installResults = await installPLugin(
+          psp,
+          dao,
+          pluginSetupRefR1B1,
+          ethers.utils.defaultAbiCoder.encode(
+            buildMetadata1.pluginSetupABI.prepareInstallation,
+            [123]
           )
+        );
+
+        plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
+          installResults.preparedEvent.args.plugin
         );
 
         // Grant permission to upgrade.
@@ -315,7 +330,7 @@ describe('SimpleStorage Integration', function () {
         );
 
         // Update to build 3.
-        const results = await updatePlugin(
+        const updateResults = await updatePlugin(
           psp,
           dao,
           plugin,
@@ -344,13 +359,13 @@ describe('SimpleStorage Integration', function () {
 
         // Check events.
         const numberStoredEvent = await findEventTopicLog(
-          results.applyTx,
+          updateResults.applyTx,
           updatedPlugin.interface,
           'NumberStored'
         );
         expect(numberStoredEvent.args.number).to.equal(123);
         const accountStoredEvent = await findEventTopicLog(
-          results.applyTx,
+          updateResults.applyTx,
           updatedPlugin.interface,
           'AccountStored'
         );
@@ -359,16 +374,18 @@ describe('SimpleStorage Integration', function () {
 
       it('updates from build 2', async () => {
         // Install build 2.
-        const plugin = new SimpleStorageR1B2__factory(signers[0]).attach(
-          await installPLugin(
-            psp,
-            dao,
-            pluginSetupRefR1B2,
-            ethers.utils.defaultAbiCoder.encode(
-              buildMetadata2.pluginSetupABI.prepareInstallation,
-              [123, ADDRESS_ONE]
-            )
+        const installResults = await installPLugin(
+          psp,
+          dao,
+          pluginSetupRefR1B2,
+          ethers.utils.defaultAbiCoder.encode(
+            buildMetadata2.pluginSetupABI.prepareInstallation,
+            [123, ADDRESS_ONE]
           )
+        );
+
+        plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
+          installResults.preparedEvent.args.plugin
         );
 
         // Grant permission to upgrade.
@@ -379,7 +396,7 @@ describe('SimpleStorage Integration', function () {
         );
 
         // Update to build 3.
-        const results = await updatePlugin(
+        const updateResults = await updatePlugin(
           psp,
           dao,
           plugin,
@@ -408,13 +425,13 @@ describe('SimpleStorage Integration', function () {
 
         // Check events.
         const numberStoredEvent = await findEventTopicLog(
-          results.applyTx,
+          updateResults.applyTx,
           updatedPlugin.interface,
           'NumberStored'
         );
         expect(numberStoredEvent.args.number).to.equal(123);
         const accountStoredEvent = await findEventTopicLog(
-          results.applyTx,
+          updateResults.applyTx,
           updatedPlugin.interface,
           'AccountStored'
         );
@@ -423,3 +440,71 @@ describe('SimpleStorage Integration', function () {
     });
   });
 });
+
+export async function populateSimpleStoragePluginRepo(
+  signer: SignerWithAddress,
+  pluginRepoFactory: string,
+  repoEnsName: string,
+  setups: string[]
+): Promise<PluginRepo> {
+  const pluginRepoFactoryContract = new PluginRepoFactory__factory(
+    signer
+  ).attach(pluginRepoFactory);
+
+  // Upload the metadata
+  const metadata = {
+    Release1: {
+      URI: `ipfs://${await uploadToIPFS(JSON.stringify(releaseMetadata1))}`,
+
+      Build1: {
+        URI: `ipfs://${await uploadToIPFS(JSON.stringify(buildMetadata1))}`,
+      },
+      Build2: {
+        URI: `ipfs://${await uploadToIPFS(JSON.stringify(buildMetadata2))}`,
+      },
+      Build3: {
+        URI: `ipfs://${await uploadToIPFS(JSON.stringify(buildMetadata3))}`,
+      },
+    },
+  };
+
+  // Create Repo for Release 1 and Build 1
+  const tx = await pluginRepoFactoryContract.createPluginRepoWithFirstVersion(
+    repoEnsName,
+    setups[0],
+    signer.address,
+    toHex(metadata.Release1.Build1.URI),
+    toHex(metadata.Release1.URI)
+  );
+
+  const eventLog = await findEventTopicLog(
+    tx,
+    PluginRepoRegistry__factory.createInterface(),
+    'PluginRepoRegistered'
+  );
+  if (!eventLog) {
+    throw new Error('Failed to get PluginRepoRegistered event log');
+  }
+
+  const pluginRepo = new PluginRepo__factory(signer).attach(
+    eventLog.args.pluginRepo
+  );
+
+  // Create Version for Release 1 and Build 2
+  await pluginRepo.createVersion(
+    1,
+    setups[1],
+    toHex(metadata.Release1.Build2.URI),
+    toHex(metadata.Release1.URI)
+  );
+
+  // Create Version for Release 1 and Build 3
+  await pluginRepo.createVersion(
+    1,
+    setups[2],
+    toHex(metadata.Release1.Build3.URI),
+    toHex(metadata.Release1.URI)
+  );
+
+  return pluginRepo;
+}
