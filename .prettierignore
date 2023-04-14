@@ -6,10 +6,10 @@ artifacts
 build
 cache
 coverage
+deployments
 dist
 node_modules
-types
-deployments
+typechain
 
 # files
 *.env
