@@ -34,7 +34,7 @@ This example is IDE agnostic, but for the best user experience, you may want to 
 
 This template comes with GitHub Actions pre-configured. Your contracts will be linted and tested on every push and pull request made to the `main` branch.
 
-Note though that to make this work, you must use your `MNEMONIC` and `INFURA_API_KEY` as [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+Note though that to make this work, you must add your `INFURA_API_KEY` as a [GitHub secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
 
 You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.yml).
 
@@ -42,7 +42,7 @@ You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.
 
 ### Pre Requisites
 
-Before being able to run any command, you need to create a `.env` file and set a BIP-39 compatible mnemonic as an environment variable. To test the contracts against the current Aragon ethereum mainnet version, you must also set an Infura API key. You can follow the example in `.env.example`. If you don't already have a mnemonic, you can use this [website](https://iancoleman.io/bip39/) to generate one. If you don't already an Infura API key, you can sign up for [Infura ] https://app.infura.io/login.
+Before being able to run any command, you need to create a `.env` file and set a BIP-39 compatible mnemonic as an environment variable. To test the contracts against the current Aragon ethereum mainnet version, you must also set an Infura API key. If you don't already an Infura API key, you can sign up for [Infura ] https://app.infura.io/login.
 
 Then, proceed with installing dependencies:
 
@@ -119,7 +119,7 @@ $ yarn clean
 Deploy the contracts to Hardhat Network:
 
 ```sh
-$ yarn deploy --greeting "Bonjour, le monde!"
+$ yarn deploy
 ```
 
 ## Tips
