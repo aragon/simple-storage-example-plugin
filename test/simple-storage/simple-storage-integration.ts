@@ -492,9 +492,6 @@ export async function populateSimpleStoragePluginRepo(
     PluginRepoRegistry__factory.createInterface(),
     'PluginRepoRegistered'
   );
-  if (!eventLog) {
-    throw new Error('Failed to get PluginRepoRegistered event log');
-  }
 
   const pluginRepo = PluginRepo__factory.connect(
     eventLog.args.pluginRepo,
