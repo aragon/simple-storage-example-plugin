@@ -32,7 +32,7 @@ describe('SimpleStorage Deployment', function () {
   before(async () => {
     const hardhatForkNetwork = process.env.HARDHAT_FORK_NETWORK
       ? process.env.HARDHAT_FORK_NETWORK
-      : 'goerli';
+      : 'mainnet';
 
     signers = await ethers.getSigners();
 
@@ -48,17 +48,11 @@ describe('SimpleStorage Deployment', function () {
       signers[0]
     );
 
+    // This assumes that the deployAll wrote the `PluginRepo` entry to the file.
     simpleStoragePluginRepo = PluginRepo__factory.connect(
       getDeployedContracts()['hardhat']['PluginRepo'],
       signers[0]
     );
-
-    console.log('repoRegistry:', repoRegistry.address);
-
-    console.log('simpleStoragePluginRepo', simpleStoragePluginRepo.address);
-
-    expect(await repoRegistry.entries(simpleStoragePluginRepo.address)).to.be
-      .true;
 
     setupR1B1 = SimpleStorageR1B1Setup__factory.connect(
       (await deployments.get('SimpleStorageR1B1Setup')).address,
@@ -73,7 +67,7 @@ describe('SimpleStorage Deployment', function () {
       signers[0]
     );
   });
-  it('create the repo', async () => {
+  it('creates the repo', async () => {
     expect(await repoRegistry.entries(simpleStoragePluginRepo.address)).to.be
       .true;
   });

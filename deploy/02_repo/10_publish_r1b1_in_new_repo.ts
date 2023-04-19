@@ -29,7 +29,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   ) {
     const hardhatForkNetwork = process.env.HARDHAT_FORK_NETWORK
       ? process.env.HARDHAT_FORK_NETWORK
-      : 'goerli';
+      : 'mainnet';
 
     pluginRepoFactoryAddr = osxContracts[hardhatForkNetwork].PluginRepoFactory;
     console.log(

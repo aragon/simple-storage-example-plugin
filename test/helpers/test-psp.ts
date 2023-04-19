@@ -15,7 +15,7 @@ export async function createPluginSetupProcessor(
 
   const hardhatForkNetwork = process.env.HARDHAT_FORK_NETWORK
     ? process.env.HARDHAT_FORK_NETWORK
-    : 'goerli';
+    : 'mainnet';
 
   const psp = new PluginSetupProcessor__factory(signer).attach(
     osxContracts[hardhatForkNetwork].PluginSetupProcessor

@@ -25,7 +25,7 @@ import {toHex, uploadToIPFS} from '../../utils/ipfs-upload';
 import {installPLugin, uninstallPLugin, updatePlugin} from '../helpers/setup';
 import {deployTestDao} from '../helpers/test-dao';
 import {createPluginSetupProcessor} from '../helpers/test-psp';
-import {ADDRESS_ONE} from './simple-storage-common';
+import {ADDRESS_ONE} from '../unit-testing/simple-storage-common';
 import {
   PluginRepoFactory__factory,
   PluginRepoRegistry__factory,
@@ -69,13 +69,13 @@ describe('SimpleStorage Integration', function () {
 
     const hardhatForkNetwork = process.env.HARDHAT_FORK_NETWORK
       ? process.env.HARDHAT_FORK_NETWORK
-      : 'goerli';
+      : 'mainnet';
 
     // Create the plugin repo
     pluginRepo = await populateSimpleStoragePluginRepo(
       signers[0],
       osxContracts[hardhatForkNetwork].PluginRepoFactory,
-      'simple-storage',
+      'simple-storage-testing',
       [
         simpleStorageR1B1Setup.address,
         simpleStorageR1B2Setup.address,

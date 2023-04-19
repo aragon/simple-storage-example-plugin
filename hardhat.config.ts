@@ -38,7 +38,7 @@ const networks: {[index: string]: NetworkUserConfig} = {
         apiUrls[
           process.env.HARDHAT_FORK_NETWORK
             ? process.env.HARDHAT_FORK_NETWORK
-            : 'goerli'
+            : 'mainnet'
         ]
       }${process.env.INFURA_API_KEY}`,
     },
