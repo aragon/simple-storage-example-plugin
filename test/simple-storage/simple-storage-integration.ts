@@ -67,11 +67,15 @@ describe('SimpleStorage Integration', function () {
       signers[0]
     ).deploy();
 
+    const hardhatForkNetwork = process.env.HARDHAT_FORK_NETWORK
+      ? process.env.HARDHAT_FORK_NETWORK
+      : 'goerli';
+
     // Create the plugin repo
     pluginRepo = await populateSimpleStoragePluginRepo(
       signers[0],
-      osxContracts.goerli.PluginRepoFactory,
-      'simple-storage-testing',
+      osxContracts[hardhatForkNetwork].PluginRepoFactory,
+      'simple-storage',
       [
         simpleStorageR1B1Setup.address,
         simpleStorageR1B2Setup.address,

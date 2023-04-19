@@ -40,8 +40,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await pluginRepo.createVersion(
     releaseId,
     setupR1B2.address,
-    toHex(`ipfs://${await uploadToIPFS(JSON.stringify(buildMetadataURI))}`),
-    toHex(`ipfs://${await uploadToIPFS(JSON.stringify(releaseMetadataURI))}`)
+    toHex(buildMetadataURI),
+    toHex(releaseMetadataURI)
   );
 
   addDeployedContract(network.name, pluginSetupContractName, setupR1B2.address);

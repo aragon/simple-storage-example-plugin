@@ -22,7 +22,7 @@ export const networkNameMapping: NetworkNameMapping = {
   goerli: 'goerli',
   polygon: 'polygon',
   polygonMumbai: 'mumbai',
-}; // TODO unify naming
+};
 
 export const ERRORS = {
   ALREADY_INITIALIZED: 'Initializable: contract is already initialized',
