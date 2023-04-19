@@ -136,8 +136,9 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
-          results.preparedEvent.args.plugin
+        plugin = SimpleStorageR1B1__factory.connect(
+          results.preparedEvent.args.plugin,
+          signers[0]
         );
       });
 
@@ -181,8 +182,9 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        plugin = new SimpleStorageR1B2__factory(signers[0]).attach(
-          results.preparedEvent.args.plugin
+        plugin = SimpleStorageR1B2__factory.connect(
+          results.preparedEvent.args.plugin,
+          signers[0]
         );
       });
 
@@ -221,8 +223,9 @@ describe('SimpleStorage Integration', function () {
             [123]
           )
         );
-        const plugin = new SimpleStorageR1B1__factory(signers[0]).attach(
-          results.preparedEvent.args.plugin
+        const plugin = SimpleStorageR1B1__factory.connect(
+          results.preparedEvent.args.plugin,
+          signers[0]
         );
 
         // Grant permission to upgrade.
@@ -247,8 +250,9 @@ describe('SimpleStorage Integration', function () {
         );
 
         // Get updated contract.
-        const updatedPlugin = new SimpleStorageR1B2__factory(signers[0]).attach(
-          plugin.address
+        const updatedPlugin = SimpleStorageR1B2__factory.connect(
+          plugin.address,
+          signers[0]
         );
 
         // Check implementation.
@@ -277,8 +281,9 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          results.preparedEvent.args.plugin
+        plugin = SimpleStorageR1B3__factory.connect(
+          results.preparedEvent.args.plugin,
+          signers[0]
         );
       });
 
@@ -318,8 +323,9 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          installResults.preparedEvent.args.plugin
+        plugin = SimpleStorageR1B3__factory.connect(
+          installResults.preparedEvent.args.plugin,
+          signers[0]
         );
 
         // Grant permission to upgrade.
@@ -344,8 +350,9 @@ describe('SimpleStorage Integration', function () {
         );
 
         // Get updated contract.
-        const updatedPlugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          plugin.address
+        const updatedPlugin = SimpleStorageR1B3__factory.connect(
+          plugin.address,
+          signers[0]
         );
 
         // Check implementation.
@@ -384,8 +391,9 @@ describe('SimpleStorage Integration', function () {
           )
         );
 
-        plugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          installResults.preparedEvent.args.plugin
+        plugin = SimpleStorageR1B3__factory.connect(
+          installResults.preparedEvent.args.plugin,
+          signers[0]
         );
 
         // Grant permission to upgrade.
@@ -410,8 +418,9 @@ describe('SimpleStorage Integration', function () {
         );
 
         // Get updated contract.
-        const updatedPlugin = new SimpleStorageR1B3__factory(signers[0]).attach(
-          plugin.address
+        const updatedPlugin = SimpleStorageR1B3__factory.connect(
+          plugin.address,
+          signers[0]
         );
 
         // Check implementation.
@@ -447,9 +456,10 @@ export async function populateSimpleStoragePluginRepo(
   repoEnsName: string,
   setups: string[]
 ): Promise<PluginRepo> {
-  const pluginRepoFactoryContract = new PluginRepoFactory__factory(
+  const pluginRepoFactoryContract = PluginRepoFactory__factory.connect(
+    pluginRepoFactory,
     signer
-  ).attach(pluginRepoFactory);
+  );
 
   // Upload the metadata
   const metadata = {
@@ -486,8 +496,9 @@ export async function populateSimpleStoragePluginRepo(
     throw new Error('Failed to get PluginRepoRegistered event log');
   }
 
-  const pluginRepo = new PluginRepo__factory(signer).attach(
-    eventLog.args.pluginRepo
+  const pluginRepo = PluginRepo__factory.connect(
+    eventLog.args.pluginRepo,
+    signer
   );
 
   // Create Version for Release 1 and Build 2
