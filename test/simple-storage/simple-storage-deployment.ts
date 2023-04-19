@@ -79,10 +79,12 @@ describe('SimpleStorage Deployment', function () {
   });
 
   it('registerd the SimpleStorageSetupR1B1', async () => {
-    let results = await simpleStoragePluginRepo['getVersion((uint8,uint16))']({
-      release: 1,
-      build: 1,
-    });
+    const results = await simpleStoragePluginRepo['getVersion((uint8,uint16))'](
+      {
+        release: 1,
+        build: 1,
+      }
+    );
 
     expect(results.pluginSetup).to.equal(setupR1B1.address);
     expect(results.buildMetadata).to.equal(
@@ -91,10 +93,12 @@ describe('SimpleStorage Deployment', function () {
   });
 
   it('registerd the SimpleStorageSetupR1B2', async () => {
-    let results = await simpleStoragePluginRepo['getVersion((uint8,uint16))']({
-      release: 1,
-      build: 2,
-    });
+    const results = await simpleStoragePluginRepo['getVersion((uint8,uint16))'](
+      {
+        release: 1,
+        build: 2,
+      }
+    );
 
     expect(results.pluginSetup).to.equal(setupR1B2.address);
     expect(results.buildMetadata).to.equal(
@@ -103,10 +107,12 @@ describe('SimpleStorage Deployment', function () {
   });
 
   it('registerd the SimpleStorageSetupR1B3', async () => {
-    let results = await simpleStoragePluginRepo['getVersion((uint8,uint16))']({
-      release: 1,
-      build: 3,
-    });
+    const results = await simpleStoragePluginRepo['getVersion((uint8,uint16))'](
+      {
+        release: 1,
+        build: 3,
+      }
+    );
 
     expect(results.pluginSetup).to.equal(setupR1B3.address);
     expect(results.buildMetadata).to.equal(
@@ -115,25 +121,31 @@ describe('SimpleStorage Deployment', function () {
   });
 
   it('makes the deployer the repo maintainer', async () => {
-    simpleStoragePluginRepo.isGranted(
-      simpleStoragePluginRepo.address,
-      signers[0].address,
-      ethers.utils.id('ROOT_PERMISSION'),
-      ethers.constants.AddressZero
-    );
+    expect(
+      await simpleStoragePluginRepo.isGranted(
+        simpleStoragePluginRepo.address,
+        signers[0].address,
+        ethers.utils.id('ROOT_PERMISSION'),
+        ethers.constants.AddressZero
+      )
+    ).to.be.true;
 
-    simpleStoragePluginRepo.isGranted(
-      simpleStoragePluginRepo.address,
-      signers[0].address,
-      ethers.utils.id('UPGRADE_REPO_PERMISSION'),
-      ethers.constants.AddressZero
-    );
+    expect(
+      await simpleStoragePluginRepo.isGranted(
+        simpleStoragePluginRepo.address,
+        signers[0].address,
+        ethers.utils.id('UPGRADE_REPO_PERMISSION'),
+        ethers.constants.AddressZero
+      )
+    ).to.be.true;
 
-    simpleStoragePluginRepo.isGranted(
-      simpleStoragePluginRepo.address,
-      signers[0].address,
-      ethers.utils.id('MAINTAINER_PERMISSION'),
-      ethers.constants.AddressZero
-    );
+    expect(
+      await simpleStoragePluginRepo.isGranted(
+        simpleStoragePluginRepo.address,
+        signers[0].address,
+        ethers.utils.id('MAINTAINER_PERMISSION'),
+        ethers.constants.AddressZero
+      )
+    ).to.be.true;
   });
 });
