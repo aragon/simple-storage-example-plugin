@@ -42,7 +42,7 @@ You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.
 
 ### Pre Requisites
 
-Before being able to run any command, you need to create a `.env` file and set a BIP-39 compatible mnemonic as an environment variable. To test the contracts against the current Aragon ethereum mainnet version, you must also set an Infura API key. If you don't already an Infura API key, you can sign up for [Infura ] https://app.infura.io/login.
+Before being able to run any command, you need to create a `.env` file and set a BIP-39 compatible mnemonic as an environment variable. To test the contracts against the current Aragon OSx goerli contracts, you must also set an Infura API key. If you don't already an Infura API key, you can sign up for [Infura](https://app.infura.io/login).
 
 Then, proceed with installing dependencies:
 

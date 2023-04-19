@@ -28,9 +28,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     network.name === 'coverage'
   ) {
     // TODO allow to select the network used for testing
-    pluginRepoFactoryAddr = osxContracts.mainnet.PluginRepoFactory;
+    pluginRepoFactoryAddr = osxContracts.goerli.PluginRepoFactory;
     console.log(
-      `Using the mainnet PluginRepoFactory address (${pluginRepoFactoryAddr}) for deployment testing on network ${network.name}`
+      `Using the goerli PluginRepoFactory address (${pluginRepoFactoryAddr}) for deployment testing on network ${network.name}`
     );
   } else {
     pluginRepoFactoryAddr =
@@ -61,7 +61,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   console.log(`Uploaded metadata of release 1: ${releaseMetadataURI}`);
   console.log(`Uploaded metadata of build 1: ${buildMetadataURI}`);
 
-  const pluginName = 'simple-storage';
+  const pluginName = 'simple-storage-123';
   const pluginSetupContractName = 'SimpleStorageR1B1Setup';
 
   const setupR1B1 = await deployments.get(pluginSetupContractName);

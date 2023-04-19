@@ -14,7 +14,7 @@ export async function createPluginSetupProcessor(
   // Create the PluginSetupProcessor
 
   const psp = new PluginSetupProcessor__factory(signer).attach(
-    osxContracts.mainnet.PluginSetupProcessor
+    osxContracts.goerli.PluginSetupProcessor
   );
 
   // grant the owner full permission for plugins

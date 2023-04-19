@@ -70,8 +70,8 @@ describe('SimpleStorage Integration', function () {
     // Create the plugin repo
     pluginRepo = await populateSimpleStoragePluginRepo(
       signers[0],
-      osxContracts.mainnet.PluginRepoFactory,
-      'simple-storage',
+      osxContracts.goerli.PluginRepoFactory,
+      'simple-storage-testing',
       [
         simpleStorageR1B1Setup.address,
         simpleStorageR1B2Setup.address,
