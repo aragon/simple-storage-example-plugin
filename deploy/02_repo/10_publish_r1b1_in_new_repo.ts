@@ -27,10 +27,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     network.name === 'hardhat' ||
     network.name === 'coverage'
   ) {
-    // TODO allow to select the network used for testing
-    pluginRepoFactoryAddr = osxContracts.mainnet.PluginRepoFactory;
+    const hardhatForkNetwork = process.env.HARDHAT_FORK_NETWORK
+      ? process.env.HARDHAT_FORK_NETWORK
+      : 'mainnet';
+
+    pluginRepoFactoryAddr = osxContracts[hardhatForkNetwork].PluginRepoFactory;
     console.log(
-      `Using the mainnet PluginRepoFactory address (${pluginRepoFactoryAddr}) for deployment testing on network ${network.name}`
+      `Using the ${hardhatForkNetwork} PluginRepoFactory address (${pluginRepoFactoryAddr}) for deployment testing on network ${network.name}`
     );
   } else {
     pluginRepoFactoryAddr =

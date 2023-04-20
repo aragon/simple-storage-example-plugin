@@ -13,8 +13,12 @@ export async function createPluginSetupProcessor(
 ): Promise<PluginSetupProcessor> {
   // Create the PluginSetupProcessor
 
+  const hardhatForkNetwork = process.env.HARDHAT_FORK_NETWORK
+    ? process.env.HARDHAT_FORK_NETWORK
+    : 'mainnet';
+
   const psp = new PluginSetupProcessor__factory(signer).attach(
-    osxContracts.mainnet.PluginSetupProcessor
+    osxContracts[hardhatForkNetwork].PluginSetupProcessor
   );
 
   // grant the owner full permission for plugins

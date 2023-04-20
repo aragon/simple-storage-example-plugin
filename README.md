@@ -24,7 +24,13 @@ based on [Paul Razvan Berg's great hardhat-template](https://github.com/PaulRBer
 
 ## Getting Started
 
-This `SimpleStorage` example accompanies the guide on [How to write an upgradeable plugin](https://devs.aragon.org/docs/osx/how-to-guides/plugin-development/upgradeable-plugin/) from the Aragon Developer Portal.
+This `SimpleStorage` example plugin repository accompanies the guide on [How to write an upgradeable plugin](https://devs.aragon.org/docs/osx/how-to-guides/plugin-development/upgradeable-plugin/) from the Aragon Developer Portal.
+It demonstrates how to
+
+- write three successive builds of an `PluginUUPSUpgradeable` implementation and associated `PluginSetup` contract
+- deploy them and publish them in an Aragon OSx `PluginRepo` created from the currently deployed `PluginRepoFactory`
+- verify them with Etherscan
+- write unit tests and integration tests against the currently deployed Aragon OSx protocol contracts
 
 ### VSCode Integration
 
@@ -42,7 +48,7 @@ You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.
 
 ### Pre Requisites
 
-Before being able to run any command, you need to create a `.env` file and set a BIP-39 compatible mnemonic as an environment variable. To test the contracts against the current Aragon ethereum mainnet version, you must also set an Infura API key. If you don't already an Infura API key, you can sign up for [Infura ] https://app.infura.io/login.
+Before being able to run any command, you need to create a `.env` file and set a private key as an environment variable. To test the contracts against the current Aragon OSx contracts on any of the supported networks, you must also set an Infura API key. If you don't already have an Infura API key, you can sign up for one at [Infura](https://app.infura.io/login).
 
 Then, proceed with installing dependencies:
 
@@ -121,6 +127,8 @@ Deploy the contracts to Hardhat Network:
 ```sh
 $ yarn deploy
 ```
+
+**⚠️ Please note the current [OZ `hardhat-upgrades` related issue](https://github.com/aragon/simple-storage-example-plugin/issues/5) leading to failing etherscan verification and the provided workaround. ⚠️**
 
 ## Tips
 

@@ -11,21 +11,6 @@ export const verifyContract = async (
   address: string,
   constructorArguments: any[]
 ) => {
-  /*const currentNetwork = HRE.network.name;
-
- const networks = await fs.promises.readFile(
-    path.join(__dirname, '../networks.json'),
-    'utf8'
-  );
-  const networksJSON = JSON.parse(networks.toString());
-  if (!Object.keys(networksJSON).includes(currentNetwork)) {
-    throw Error(
-      `Current network ${currentNetwork} not supported. Please change to one of the next networks: ${Object.keys(
-        networksJSON
-      ).join(',')}`
-    );
-  }*/
-
   try {
     const msDelay = 500; // minimum delay between tasks
     const times = 2; // number of retries
