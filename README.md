@@ -24,7 +24,13 @@ based on [Paul Razvan Berg's great hardhat-template](https://github.com/PaulRBer
 
 ## Getting Started
 
-This `SimpleStorage` example accompanies the guide on [How to write an upgradeable plugin](https://devs.aragon.org/docs/osx/how-to-guides/plugin-development/upgradeable-plugin/) from the Aragon Developer Portal.
+This `SimpleStorage` example plugin repository accompanies the guide on [How to write an upgradeable plugin](https://devs.aragon.org/docs/osx/how-to-guides/plugin-development/upgradeable-plugin/) from the Aragon Developer Portal.
+It demonstrates how to
+
+- write three successive builds of an `PluginUUPSUpgradeable` implementation and associated `PluginSetup` contract
+- deploy them and publish them in an Aragon OSx `PluginRepo` created from the currently deployed `PluginRepoFactory`
+- verify them with Etherscan
+- write unit tests and integration tests against the currently deployed Aragon OSx protocol contracts
 
 ### VSCode Integration
 
@@ -121,6 +127,8 @@ Deploy the contracts to Hardhat Network:
 ```sh
 $ yarn deploy
 ```
+
+**⚠️ Please note the current [OZ `hardhat-upgrades` related issue](https://github.com/aragon/simple-storage-example-plugin/issues/5) leading to failing etherscan verification and the provided workaround. ⚠️**
 
 ## Tips
 
