@@ -26,8 +26,8 @@ const apiUrls: NetworkNameMapping = {
   arbitrumGoerli: 'https://arbitrumGoerli.infura.io/v3/',
   mainnet: 'https://mainnet.infura.io/v3/',
   goerli: 'https://goerli.infura.io/v3/',
-  polygon: 'https://polygon.infura.io/v3/',
-  polygonMumbai: 'https://polygonMumbai.infura.io/v3/',
+  polygon: 'https://polygon-mainnet.infura.io/v3/',
+  polygonMumbai: 'https://polygon-mumbai.infura.io/v3/',
 };
 
 const networks: {[index: string]: NetworkUserConfig} = {
