@@ -1,4 +1,4 @@
-import buildMetadata2 from '../../contracts/release1/build2/build-metadata.json';
+import buildMetadata2 from '../../contracts/release1/build2/build-metadata-R1B2.json';
 import {
   DAO,
   SimpleStorageR1B1,
@@ -40,7 +40,7 @@ describe('SimpleStorageR1B2Setup', function () {
 
     before(async () => {
       initData = abiCoder.encode(
-        buildMetadata2.pluginSetupABI.prepareInstallation,
+        buildMetadata2.pluginSetupABI.prepareInstallation.arguments,
         [defaultInputR1B2.number, defaultInputR1B2.account]
       );
     });
@@ -136,7 +136,7 @@ describe('SimpleStorageR1B2Setup', function () {
               plugin: pluginBuild1.address,
               currentHelpers: [],
               data: ethers.utils.defaultAbiCoder.encode(
-                buildMetadata2.pluginSetupABI.prepareUpdate.fromBuild1,
+                buildMetadata2.pluginSetupABI.prepareUpdate[1].arguments,
                 [ADDRESS_ONE]
               ),
             }

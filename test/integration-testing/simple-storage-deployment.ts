@@ -82,7 +82,7 @@ describe('SimpleStorage Deployment', function () {
 
     expect(results.pluginSetup).to.equal(setupR1B1.address);
     expect(results.buildMetadata).to.equal(
-      toHex('ipfs://QmZCyVtcXJxs9ZyHwBMsXUifoLukvKgSFWgrPKQH2JzhYz')
+      toHex('ipfs://QmRHzhtCFQCwWx9WMuUzkE4D8teLnL26qfo68gNbfSKMZ8')
     );
   });
 
@@ -96,7 +96,7 @@ describe('SimpleStorage Deployment', function () {
 
     expect(results.pluginSetup).to.equal(setupR1B2.address);
     expect(results.buildMetadata).to.equal(
-      toHex('ipfs://QmRcohLe3kp1jYzDa8rG6XabzqB3S3X6Vz8hQPV6GkKFG9')
+      toHex('ipfs://QmQkwM2rJ9Hsrsqj4KN6LhQhM8SQQP4dsP7NBdbnZ86bqS')
     );
   });
 
@@ -110,7 +110,7 @@ describe('SimpleStorage Deployment', function () {
 
     expect(results.pluginSetup).to.equal(setupR1B3.address);
     expect(results.buildMetadata).to.equal(
-      toHex('ipfs://QmXNhf9sHQ7y1y88ff2eWWZGRpJrquH39LhMSZVe9HYDjW')
+      toHex('ipfs://QmPcG8afpksyRmPnLm4F6bUQxJ8S6B3orDnXL63fResviE')
     );
   });
 

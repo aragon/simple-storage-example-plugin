@@ -1,0 +1,15 @@
+{
+  "ui": "",
+  "change": "Initial build.",
+  "pluginSetupABI": {
+    "prepareInstallation": {
+      "functionToCall": "initialzeBuild1",
+      "arguments": ["uint256 number"]
+    },
+    "prepareUpdate": {},
+    "prepareUninstallation": {
+      "functionToCall": "",
+      "arguments": []
+    }
+  }
+}

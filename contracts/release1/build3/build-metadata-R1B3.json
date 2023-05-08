@@ -1,0 +1,24 @@
+{
+  "ui": "",
+  "change": "Replaced the `STORE_PERMISSION` permission by the more specific `STORE_NUMBER_PERMISSION` and `STORE_ACCOUNT_PERMISSION` and added the `NumberStored` and `AccountStored` events.",
+  "pluginSetupABI": {
+    "prepareInstallation": {
+      "functionToCall": "initialzeBuild3",
+      "arguments": ["uint256 number", "address account"]
+    },
+    "prepareUpdate": {
+      "1": {
+        "functionToCall": "initializeFromBuild1",
+        "arguments": ["address account"]
+      },
+      "2": {
+        "functionToCall": "initializeFromBuild2",
+        "arguments": []
+      }
+    },
+    "prepareUninstallation": {
+      "functionToCall": "",
+      "arguments": []
+    }
+  }
+}

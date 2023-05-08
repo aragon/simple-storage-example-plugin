@@ -1,4 +1,4 @@
-import buildMetadata1 from '../../contracts/release1/build1/build-metadata.json';
+import buildMetadata1 from '../../contracts/release1/build1/build-metadata-R1B1.json';
 import {
   DAO,
   SimpleStorageR1B1Setup,
@@ -38,7 +38,7 @@ describe('SimpleStorageR1B1Setup', function () {
 
     before(async () => {
       initData = abiCoder.encode(
-        buildMetadata1.pluginSetupABI.prepareInstallation,
+        buildMetadata1.pluginSetupABI.prepareInstallation.arguments,
         [defaultInputR1B1.number]
       );
     });

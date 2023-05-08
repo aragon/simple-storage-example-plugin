@@ -1,4 +1,4 @@
-import buildMetadata3 from '../../contracts/release1/build3/build-metadata.json';
+import buildMetadata3 from '../../contracts/release1/build3/build-metadata-R1B3.json';
 import releaseMetadata1 from '../../contracts/release1/release-metadata.json';
 import {addDeployedContract, getDeployedContracts} from '../../utils/helpers';
 import {toHex} from '../../utils/ipfs-upload';

@@ -1,4 +1,4 @@
-import buildMetadata1 from '../../contracts/release1/build1/build-metadata.json';
+import buildMetadata1 from '../../contracts/release1/build1/build-metadata-R1B1.json';
 import releaseMetadata1 from '../../contracts/release1/release-metadata.json';
 import {
   networkNameMapping,
@@ -64,7 +64,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   console.log(`Uploaded metadata of release 1: ${releaseMetadataURI}`);
   console.log(`Uploaded metadata of build 1: ${buildMetadataURI}`);
 
-  const pluginName = 'simple-storage';
+  const pluginName = 'simple-storage'; // TODO PICK NEW NAME TO REDEPLOY ON GOERLI
   const pluginSetupContractName = 'SimpleStorageR1B1Setup';
 
   const setupR1B1 = await deployments.get(pluginSetupContractName);
