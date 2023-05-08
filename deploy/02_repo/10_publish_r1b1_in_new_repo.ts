@@ -64,7 +64,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   console.log(`Uploaded metadata of release 1: ${releaseMetadataURI}`);
   console.log(`Uploaded metadata of build 1: ${buildMetadataURI}`);
 
-  const pluginName = 'simple-storage'; // TODO PICK NEW NAME TO REDEPLOY ON GOERLI
+  const pluginName = 'simple-storage-example-plugin';
   const pluginSetupContractName = 'SimpleStorageR1B1Setup';
 
   const setupR1B1 = await deployments.get(pluginSetupContractName);
