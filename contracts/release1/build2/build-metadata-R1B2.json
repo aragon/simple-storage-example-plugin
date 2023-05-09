@@ -4,7 +4,7 @@
   "pluginSetupABI": {
     "prepareInstallation": {
       "description": "The information required for the installation of build 2.",
-      "arguments": [
+      "inputs": [
         {
           "name": "number",
           "type": "uint256",
@@ -20,7 +20,7 @@
     "prepareUpdate": {
       "1": {
         "description": "The information required for the update from build 1 to build 2.",
-        "arguments": [
+        "inputs": [
           {
             "name": "account",
             "type": "address",
@@ -31,7 +31,7 @@
     },
     "prepareUninstallation": {
       "description": "The information required for the uninstallation of build 2.",
-      "arguments": []
+      "inputs": []
     }
   }
 }
