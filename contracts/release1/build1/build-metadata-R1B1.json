@@ -3,12 +3,18 @@
   "change": "Initial build.",
   "pluginSetupABI": {
     "prepareInstallation": {
-      "functionToCall": "initialzeBuild1",
-      "arguments": ["uint256 number"]
+      "description": "The information required for the installation of build 1.",
+      "arguments": [
+        {
+          "name": "number",
+          "type": "uint256",
+          "description": "The inital number to be stored."
+        }
+      ]
     },
     "prepareUpdate": {},
     "prepareUninstallation": {
-      "functionToCall": "",
+      "description": "The information required for the uninstallation of build 1.",
       "arguments": []
     }
   }

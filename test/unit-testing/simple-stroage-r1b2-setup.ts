@@ -40,7 +40,9 @@ describe('SimpleStorageR1B2Setup', function () {
 
     before(async () => {
       initData = abiCoder.encode(
-        buildMetadata2.pluginSetupABI.prepareInstallation.arguments,
+        buildMetadata2.pluginSetupABI.prepareInstallation.arguments.map(
+          arg => `${arg.type} ${arg.name}`
+        ),
         [defaultInputR1B2.number, defaultInputR1B2.account]
       );
     });
@@ -136,7 +138,9 @@ describe('SimpleStorageR1B2Setup', function () {
               plugin: pluginBuild1.address,
               currentHelpers: [],
               data: ethers.utils.defaultAbiCoder.encode(
-                buildMetadata2.pluginSetupABI.prepareUpdate[1].arguments,
+                buildMetadata2.pluginSetupABI.prepareUpdate['1'].arguments.map(
+                  arg => `${arg.type} ${arg.name}`
+                ),
                 [ADDRESS_ONE]
               ),
             }

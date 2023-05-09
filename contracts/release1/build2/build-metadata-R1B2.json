@@ -1,19 +1,36 @@
 {
   "ui": "",
-  "change": "Added a `address account` as a second state variable.",
+  "change": "Added `address account` as a second state variable.",
   "pluginSetupABI": {
     "prepareInstallation": {
-      "functionToCall": "initialzeBuild2",
-      "arguments": ["uint256 number", "address account"]
+      "description": "The information required for the installation of build 2.",
+      "arguments": [
+        {
+          "name": "number",
+          "type": "uint256",
+          "description": "The inital number to be stored."
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "description": "The inital account to be stored."
+        }
+      ]
     },
     "prepareUpdate": {
       "1": {
-        "functionToCall": "initializeFromBuild1",
-        "arguments": ["address account"]
+        "description": "The information required for the update from build 1 to build 2.",
+        "arguments": [
+          {
+            "name": "account",
+            "type": "address",
+            "description": "The inital account to be stored."
+          }
+        ]
       }
     },
     "prepareUninstallation": {
-      "functionToCall": "",
+      "description": "The information required for the uninstallation of build 2.",
       "arguments": []
     }
   }

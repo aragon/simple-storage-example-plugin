@@ -38,7 +38,9 @@ describe('SimpleStorageR1B1Setup', function () {
 
     before(async () => {
       initData = abiCoder.encode(
-        buildMetadata1.pluginSetupABI.prepareInstallation.arguments,
+        buildMetadata1.pluginSetupABI.prepareInstallation.arguments.map(
+          arg => `${arg.type} ${arg.name}`
+        ),
         [defaultInputR1B1.number]
       );
     });

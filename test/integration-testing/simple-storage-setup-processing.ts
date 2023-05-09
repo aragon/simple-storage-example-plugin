@@ -135,7 +135,9 @@ describe('SimpleStorage Integration', function () {
           dao,
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata1.pluginSetupABI.prepareInstallation.arguments,
+            buildMetadata1.pluginSetupABI.prepareInstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [123]
           )
         );
@@ -162,7 +164,9 @@ describe('SimpleStorage Integration', function () {
           plugin,
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata1.pluginSetupABI.prepareUninstallation.arguments,
+            buildMetadata1.pluginSetupABI.prepareUninstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             []
           ),
           []
@@ -181,7 +185,9 @@ describe('SimpleStorage Integration', function () {
           dao,
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata2.pluginSetupABI.prepareInstallation.arguments,
+            buildMetadata2.pluginSetupABI.prepareInstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [123, ADDRESS_ONE]
           )
         );
@@ -209,7 +215,9 @@ describe('SimpleStorage Integration', function () {
           plugin,
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata2.pluginSetupABI.prepareUninstallation.arguments,
+            buildMetadata2.pluginSetupABI.prepareUninstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             []
           ),
           []
@@ -223,7 +231,9 @@ describe('SimpleStorage Integration', function () {
           dao,
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata1.pluginSetupABI.prepareInstallation.arguments,
+            buildMetadata1.pluginSetupABI.prepareInstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [123]
           )
         );
@@ -248,7 +258,9 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B1,
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata2.pluginSetupABI.prepareUpdate[1].arguments,
+            buildMetadata2.pluginSetupABI.prepareUpdate['1'].arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [ADDRESS_ONE]
           )
         );
@@ -280,7 +292,9 @@ describe('SimpleStorage Integration', function () {
           dao,
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata3.pluginSetupABI.prepareInstallation.arguments,
+            buildMetadata3.pluginSetupABI.prepareInstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [123, ADDRESS_ONE]
           )
         );
@@ -308,7 +322,9 @@ describe('SimpleStorage Integration', function () {
           plugin,
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata3.pluginSetupABI.prepareUninstallation.arguments,
+            buildMetadata3.pluginSetupABI.prepareUninstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             []
           ),
           []
@@ -322,7 +338,9 @@ describe('SimpleStorage Integration', function () {
           dao,
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata1.pluginSetupABI.prepareInstallation.arguments,
+            buildMetadata1.pluginSetupABI.prepareInstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [123]
           )
         );
@@ -348,7 +366,9 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B1,
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata2.pluginSetupABI.prepareUpdate[1].arguments,
+            buildMetadata2.pluginSetupABI.prepareUpdate['1'].arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [ADDRESS_ONE]
           )
         );
@@ -390,7 +410,9 @@ describe('SimpleStorage Integration', function () {
           dao,
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata2.pluginSetupABI.prepareInstallation.arguments,
+            buildMetadata2.pluginSetupABI.prepareInstallation.arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             [123, ADDRESS_ONE]
           )
         );
@@ -416,7 +438,9 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B2,
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata3.pluginSetupABI.prepareUpdate[2].arguments,
+            buildMetadata3.pluginSetupABI.prepareUpdate[2].arguments.map(
+              arg => `${arg.type} ${arg.name}`
+            ),
             []
           )
         );
