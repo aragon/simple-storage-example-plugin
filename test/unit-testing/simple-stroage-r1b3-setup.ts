@@ -171,8 +171,8 @@ describe('SimpleStorageR1B3Setup', function () {
 
         const expectedInitData =
           SimpleStorageR1B3__factory.createInterface().encodeFunctionData(
-            'initializeFromBuild1',
-            [ADDRESS_ONE]
+            'initializeFromBuild',
+            [1, abiCoder.encode(['address'], [ADDRESS_ONE])]
           );
 
         expect(initData).to.be.equal(expectedInitData);
@@ -232,7 +232,8 @@ describe('SimpleStorageR1B3Setup', function () {
 
         const expectedInitData =
           SimpleStorageR1B3__factory.createInterface().encodeFunctionData(
-            'initializeFromBuild2'
+            'initializeFromBuild',
+            [2, abiCoder.encode([], [])]
           );
 
         expect(initData).to.be.equal(expectedInitData);

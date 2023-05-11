@@ -13,21 +13,19 @@ contract SimpleStorageR1B2 is PluginUUPSUpgradeable {
     /// @notice Initializes the plugin when build 2 is installed.
     /// @param _number The number to be stored.
     /// @param _account The account to be stored.
-    function initializeBuild2(
-        IDAO _dao,
-        uint256 _number,
-        address _account
-    ) external reinitializer(2) {
+    function initialize(IDAO _dao, uint256 _number, address _account) external reinitializer(2) {
         __PluginUUPSUpgradeable_init(_dao);
         number = _number;
         account = _account;
     }
 
-    /// @notice Initializes the plugin when the update from build 1 to build 2 is applied.
-    /// @dev The initialization of `SimpleStorageR1B1` has already happened.
-    /// @param _account The account to be stored.
-    function initializeFromBuild1(address _account) external reinitializer(2) {
-        account = _account;
+    /// @notice Initializes the plugin when updating from a previous build.
+    /// @param _build The number of the build that the update transitioned from.
+    /// @param _data The initialization data
+    function initializeFromBuild(uint16 _build, bytes calldata _data) external reinitializer(2) {
+        if (_build == 1) {
+            account = abi.decode(_data, (address));
+        }
     }
 
     /// @notice Stores a new number to storage. Caller needs STORE_PERMISSION.

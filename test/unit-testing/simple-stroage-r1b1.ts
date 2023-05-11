@@ -40,21 +40,15 @@ describe('SimpleStorageR1B1', function () {
 
   describe('initialize', async () => {
     it('reverts if trying to re-initialize', async () => {
-      await simpleStorageR1B1.initializeBuild1(
-        dao.address,
-        defaultInput.number
-      );
+      await simpleStorageR1B1.initialize(dao.address, defaultInput.number);
 
       await expect(
-        simpleStorageR1B1.initializeBuild1(dao.address, defaultInput.number)
+        simpleStorageR1B1.initialize(dao.address, defaultInput.number)
       ).to.be.revertedWith('Initializable: contract is already initialized');
     });
 
     it('stores the number', async () => {
-      await simpleStorageR1B1.initializeBuild1(
-        dao.address,
-        defaultInput.number
-      );
+      await simpleStorageR1B1.initialize(dao.address, defaultInput.number);
 
       expect(await simpleStorageR1B1.number()).to.equal(defaultInput.number);
     });
@@ -65,10 +59,7 @@ describe('SimpleStorageR1B1', function () {
       const newNumber = BigNumber.from(456);
 
       beforeEach(async () => {
-        await simpleStorageR1B1.initializeBuild1(
-          dao.address,
-          defaultInput.number
-        );
+        await simpleStorageR1B1.initialize(dao.address, defaultInput.number);
       });
 
       it('reverts if sender lacks permission', async () => {
