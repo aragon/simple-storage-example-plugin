@@ -8,11 +8,13 @@
         {
           "name": "number",
           "type": "uint256",
+          "internalType": "uint256",
           "description": "The inital number to be stored."
         },
         {
           "name": "account",
           "type": "address",
+          "internalType": "address",
           "description": "The inital account to be stored."
         }
       ]
@@ -24,6 +26,7 @@
           {
             "name": "account",
             "type": "address",
+            "internalType": "address",
             "description": "The inital account to be stored."
           }
         ]

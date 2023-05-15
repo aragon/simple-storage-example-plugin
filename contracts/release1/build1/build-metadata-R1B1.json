@@ -8,6 +8,7 @@
         {
           "name": "number",
           "type": "uint256",
+          "internalType": "uint256",
           "description": "The inital number to be stored."
         }
       ]
