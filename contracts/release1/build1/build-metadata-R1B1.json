@@ -1,5 +1,5 @@
 {
-  "ui": "",
+  "ui": {},
   "change": "Initial build.",
   "pluginSetupABI": {
     "prepareInstallation": {

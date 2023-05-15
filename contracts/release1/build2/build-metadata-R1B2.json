@@ -1,5 +1,5 @@
 {
-  "ui": "",
+  "ui": {},
   "change": "Added `address account` as a second state variable.",
   "pluginSetupABI": {
     "prepareInstallation": {

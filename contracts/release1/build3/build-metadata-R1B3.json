@@ -1,5 +1,5 @@
 {
-  "ui": "",
+  "ui": {},
   "change": "Replaced the `STORE_PERMISSION` permission by the more specific `STORE_NUMBER_PERMISSION` and `STORE_ACCOUNT_PERMISSION` and added the `NumberStored` and `AccountStored` events.",
   "pluginSetupABI": {
     "prepareInstallation": {
