@@ -14,7 +14,9 @@ export function getNamedTypesFromMetadata(inputs: any): string[] {
 
   for (const input of inputs) {
     if (input.type.startsWith('tuple')) {
-      let tupleResult = getNamedTypesFromMetadata(input.components).join(', ');
+      const tupleResult = getNamedTypesFromMetadata(input.components).join(
+        ', '
+      );
 
       let tupleString = `tuple(${tupleResult})`;
 
