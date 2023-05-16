@@ -438,7 +438,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B2,
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
-            buildMetadata3.pluginSetupABI.prepareUpdate[2].inputs.map(
+            buildMetadata3.pluginSetupABI.prepareUpdate['2'].inputs.map(
               arg => `${arg.type} ${arg.name}`
             ),
             []

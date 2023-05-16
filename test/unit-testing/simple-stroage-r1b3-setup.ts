@@ -222,7 +222,7 @@ describe('SimpleStorageR1B3Setup', function () {
               plugin: pluginBuild2.address,
               currentHelpers: [],
               data: ethers.utils.defaultAbiCoder.encode(
-                buildMetadata3.pluginSetupABI.prepareUpdate[2].inputs.map(
+                buildMetadata3.pluginSetupABI.prepareUpdate['2'].inputs.map(
                   arg => `${arg.type} ${arg.name}`
                 ),
                 []
