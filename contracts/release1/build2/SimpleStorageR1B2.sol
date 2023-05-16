@@ -22,7 +22,7 @@ contract SimpleStorageR1B2 is PluginUUPSUpgradeable {
     /// @notice Initializes the plugin when updating from a previous build.
     /// @param _build The number of the build that the update transitioned from.
     /// @param _data The bytes-encoded initialization data.
-    function initializeFromBuild(uint16 _build, bytes calldata _data) external reinitializer(2) {
+    function initializeFrom(uint16 _build, bytes calldata _data) external reinitializer(2) {
         if (_build == 1) {
             account = abi.decode(_data, (address));
         }

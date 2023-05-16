@@ -61,7 +61,7 @@ contract SimpleStorageR1B3Setup is PluginSetup {
         returns (bytes memory initData, PreparedSetupData memory preparedSetupData)
     {
         initData = abi.encodeWithSelector(
-            SimpleStorageR1B3.initializeFromBuild.selector,
+            SimpleStorageR1B3.initializeFrom.selector,
             _currentBuild,
             _payload.data
         );

@@ -54,7 +54,7 @@ contract SimpleStorageR1B2Setup is PluginSetup {
         (_dao, preparedSetupData);
 
         initData = abi.encodeWithSelector(
-            SimpleStorageR1B2.initializeFromBuild.selector,
+            SimpleStorageR1B2.initializeFrom.selector,
             _currentBuild,
             _payload.data
         );
