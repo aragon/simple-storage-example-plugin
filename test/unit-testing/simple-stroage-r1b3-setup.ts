@@ -46,7 +46,7 @@ describe('SimpleStorageR1B3Setup', function () {
     before(async () => {
       initData = abiCoder.encode(
         getNamedTypesFromMetadata(
-          buildMetadata3.pluginSetupABI.prepareInstallation.inputs
+          buildMetadata3.pluginSetup.prepareInstallation.inputs
         ),
         [defaultInputR1B3.number, defaultInputR1B3.account]
       );
@@ -162,7 +162,7 @@ describe('SimpleStorageR1B3Setup', function () {
               currentHelpers: [],
               data: ethers.utils.defaultAbiCoder.encode(
                 getNamedTypesFromMetadata(
-                  buildMetadata3.pluginSetupABI.prepareUpdate['1'].inputs
+                  buildMetadata3.pluginSetup.prepareUpdate['1'].inputs
                 ),
                 [ADDRESS_ONE]
               ),
@@ -223,7 +223,7 @@ describe('SimpleStorageR1B3Setup', function () {
               currentHelpers: [],
               data: ethers.utils.defaultAbiCoder.encode(
                 getNamedTypesFromMetadata(
-                  buildMetadata3.pluginSetupABI.prepareUpdate['2'].inputs
+                  buildMetadata3.pluginSetup.prepareUpdate['2'].inputs
                 ),
                 []
               ),

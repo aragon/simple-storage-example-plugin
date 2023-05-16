@@ -137,7 +137,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata1.pluginSetupABI.prepareInstallation.inputs
+              buildMetadata1.pluginSetup.prepareInstallation.inputs
             ),
             [123]
           )
@@ -166,7 +166,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata1.pluginSetupABI.prepareUninstallation.inputs
+              buildMetadata1.pluginSetup.prepareUninstallation.inputs
             ),
             []
           ),
@@ -187,7 +187,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata2.pluginSetupABI.prepareInstallation.inputs
+              buildMetadata2.pluginSetup.prepareInstallation.inputs
             ),
             [123, ADDRESS_ONE]
           )
@@ -217,7 +217,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata2.pluginSetupABI.prepareUninstallation.inputs
+              buildMetadata2.pluginSetup.prepareUninstallation.inputs
             ),
             []
           ),
@@ -233,7 +233,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata1.pluginSetupABI.prepareInstallation.inputs
+              buildMetadata1.pluginSetup.prepareInstallation.inputs
             ),
             [123]
           )
@@ -260,7 +260,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata2.pluginSetupABI.prepareUpdate['1'].inputs
+              buildMetadata2.pluginSetup.prepareUpdate['1'].inputs
             ),
             [ADDRESS_ONE]
           )
@@ -294,7 +294,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata3.pluginSetupABI.prepareInstallation.inputs
+              buildMetadata3.pluginSetup.prepareInstallation.inputs
             ),
             [123, ADDRESS_ONE]
           )
@@ -324,7 +324,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata3.pluginSetupABI.prepareUninstallation.inputs
+              buildMetadata3.pluginSetup.prepareUninstallation.inputs
             ),
             []
           ),
@@ -340,7 +340,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B1,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata1.pluginSetupABI.prepareInstallation.inputs
+              buildMetadata1.pluginSetup.prepareInstallation.inputs
             ),
             [123]
           )
@@ -368,7 +368,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata3.pluginSetupABI.prepareUpdate['1'].inputs
+              buildMetadata3.pluginSetup.prepareUpdate['1'].inputs
             ),
             [ADDRESS_ONE]
           )
@@ -412,7 +412,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B2,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata2.pluginSetupABI.prepareInstallation.inputs
+              buildMetadata2.pluginSetup.prepareInstallation.inputs
             ),
             [123, ADDRESS_ONE]
           )
@@ -440,7 +440,7 @@ describe('SimpleStorage Integration', function () {
           pluginSetupRefR1B3,
           ethers.utils.defaultAbiCoder.encode(
             getNamedTypesFromMetadata(
-              buildMetadata3.pluginSetupABI.prepareUpdate['2'].inputs
+              buildMetadata3.pluginSetup.prepareUpdate['2'].inputs
             ),
             []
           )

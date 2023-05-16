@@ -39,7 +39,7 @@ describe('SimpleStorageR1B1Setup', function () {
     before(async () => {
       initData = abiCoder.encode(
         getNamedTypesFromMetadata(
-          buildMetadata1.pluginSetupABI.prepareInstallation.inputs
+          buildMetadata1.pluginSetup.prepareInstallation.inputs
         ),
         [defaultInputR1B1.number]
       );

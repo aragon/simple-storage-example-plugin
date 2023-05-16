@@ -1,7 +1,7 @@
 {
   "ui": {},
   "change": "Initial build.",
-  "pluginSetupABI": {
+  "pluginSetup": {
     "prepareInstallation": {
       "description": "The information required for the installation of build 1.",
       "inputs": [
