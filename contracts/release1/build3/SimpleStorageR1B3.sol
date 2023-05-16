@@ -27,11 +27,7 @@ contract SimpleStorageR1B3 is PluginUUPSUpgradeable {
     /// @notice Initializes the plugin when build 3 is installed.
     /// @param _number The number to be stored.
     /// @param _account The account to be stored.
-    function initializeBuild3(
-        IDAO _dao,
-        uint256 _number,
-        address _account
-    ) external reinitializer(3) {
+    function initialize(IDAO _dao, uint256 _number, address _account) external reinitializer(3) {
         __PluginUUPSUpgradeable_init(_dao);
         number = _number;
         account = _account;
@@ -40,21 +36,17 @@ contract SimpleStorageR1B3 is PluginUUPSUpgradeable {
         emit AccountStored({account: _account});
     }
 
-    /// @notice Initializes the plugin when the update from build 2 to build 3 is applied.
-    /// @dev The initialization of `SimpleStorageR1B2` has already happened.
-    function initializeFromBuild2() external reinitializer(3) {
-        emit NumberStored({number: number});
-        emit AccountStored({account: account});
-    }
-
-    /// @notice Initializes the plugin when the update from build 1 to build 3 is applied.
-    /// @dev The initialization of `SimpleStorageR1B1` has already happened.
-    /// @param _account The account to be stored.
-    function initializeFromBuild1(address _account) external reinitializer(3) {
-        account = _account;
-
-        emit NumberStored({number: number});
-        emit AccountStored({account: _account});
+    /// @notice Initializes the plugin when updating from a previous build.
+    /// @param _build The number of the build that the update transitioned from.
+    /// @param _data The bytes-encoded initialization data.
+    function initializeFrom(uint16 _build, bytes calldata _data) external reinitializer(3) {
+        if (_build == 1) {
+            account = abi.decode(_data, (address));
+        }
+        if (_build <= 2) {
+            emit NumberStored({number: number});
+            emit AccountStored({account: account});
+        }
     }
 
     /// @notice Stores a new number to storage. Caller needs STORE_NUMBER_PERMISSION.

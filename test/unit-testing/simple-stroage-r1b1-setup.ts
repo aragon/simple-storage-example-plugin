@@ -1,4 +1,4 @@
-import buildMetadata1 from '../../contracts/release1/build1/build-metadata.json';
+import buildMetadata1 from '../../contracts/release1/build1/build-metadata-R1B1.json';
 import {
   DAO,
   SimpleStorageR1B1Setup,
@@ -6,7 +6,7 @@ import {
   SimpleStorageR1B1__factory,
 } from '../../typechain';
 import {deployTestDao} from '../helpers/test-dao';
-import {Operation} from '../helpers/types';
+import {Operation, getNamedTypesFromMetadata} from '../helpers/types';
 import {
   ADDRESS_ZERO,
   EMPTY_DATA,
@@ -38,7 +38,9 @@ describe('SimpleStorageR1B1Setup', function () {
 
     before(async () => {
       initData = abiCoder.encode(
-        buildMetadata1.pluginSetupABI.prepareInstallation,
+        getNamedTypesFromMetadata(
+          buildMetadata1.pluginSetup.prepareInstallation.inputs
+        ),
         [defaultInputR1B1.number]
       );
     });

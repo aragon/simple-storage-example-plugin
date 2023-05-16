@@ -23,12 +23,7 @@ contract SimpleStorageR1B2Setup is PluginSetup {
 
         plugin = createERC1967Proxy(
             simpleStorageImplementation,
-            abi.encodeWithSelector(
-                SimpleStorageR1B2.initializeBuild2.selector,
-                _dao,
-                _number,
-                _account
-            )
+            abi.encodeWithSelector(SimpleStorageR1B2.initialize.selector, _dao, _number, _account)
         );
 
         PermissionLib.MultiTargetPermission[]
@@ -58,13 +53,11 @@ contract SimpleStorageR1B2Setup is PluginSetup {
     {
         (_dao, preparedSetupData);
 
-        if (_currentBuild == 1) {
-            address _account = abi.decode(_payload.data, (address));
-            initData = abi.encodeWithSelector(
-                SimpleStorageR1B2.initializeFromBuild1.selector,
-                _account
-            );
-        }
+        initData = abi.encodeWithSelector(
+            SimpleStorageR1B2.initializeFrom.selector,
+            _currentBuild,
+            _payload.data
+        );
     }
 
     /// @inheritdoc IPluginSetup

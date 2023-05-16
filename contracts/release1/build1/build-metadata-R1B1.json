@@ -1,0 +1,22 @@
+{
+  "ui": {},
+  "change": "Initial build.",
+  "pluginSetup": {
+    "prepareInstallation": {
+      "description": "The information required for the installation of build 1.",
+      "inputs": [
+        {
+          "name": "number",
+          "type": "uint256",
+          "internalType": "uint256",
+          "description": "The inital number to be stored."
+        }
+      ]
+    },
+    "prepareUpdate": {},
+    "prepareUninstallation": {
+      "description": "The information required for the uninstallation of build 1.",
+      "inputs": []
+    }
+  }
+}

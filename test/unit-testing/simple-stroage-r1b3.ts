@@ -52,14 +52,14 @@ describe('SimpleStorageR1B3', async function () {
 
   describe('initialize', async () => {
     it('reverts if trying to re-initialize', async () => {
-      await simpleStorageR1B3.initializeBuild3(
+      await simpleStorageR1B3.initialize(
         dao.address,
         defaultInput.number,
         defaultInput.account
       );
 
       await expect(
-        simpleStorageR1B3.initializeBuild3(
+        simpleStorageR1B3.initialize(
           dao.address,
           defaultInput.number,
           defaultInput.account
@@ -68,7 +68,7 @@ describe('SimpleStorageR1B3', async function () {
     });
 
     it('stores the number and account and emits the NumberStored and AccountStored events', async () => {
-      const tx = await simpleStorageR1B3.initializeBuild3(
+      const tx = await simpleStorageR1B3.initialize(
         dao.address,
         defaultInput.number,
         defaultInput.account
@@ -100,7 +100,7 @@ describe('SimpleStorageR1B3', async function () {
     const newAccount = ADDRESS_TWO;
 
     beforeEach(async () => {
-      await simpleStorageR1B3.initializeBuild3(
+      await simpleStorageR1B3.initialize(
         dao.address,
         defaultInput.number,
         defaultInput.account

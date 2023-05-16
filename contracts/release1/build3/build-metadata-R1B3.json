@@ -1,0 +1,44 @@
+{
+  "ui": {},
+  "change": "- Introduces two separate permissions for the storage of the number and account replacing the old generic ones.\n - Events are now emitted everytime the stored values change.",
+  "pluginSetup": {
+    "prepareInstallation": {
+      "description": "The information required for the installation of build 3.",
+      "inputs": [
+        {
+          "name": "number",
+          "type": "uint256",
+          "internalType": "uint256",
+          "description": "The inital number to be stored."
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address",
+          "description": "The inital account to be stored."
+        }
+      ]
+    },
+    "prepareUpdate": {
+      "1": {
+        "description": "The information required for the update from build 1 to build 3.",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address",
+            "description": "The inital account to be stored."
+          }
+        ]
+      },
+      "2": {
+        "description": "The information required for the update from build 2 to build 3.",
+        "inputs": []
+      }
+    },
+    "prepareUninstallation": {
+      "description": "The information required for the uninstallation of build 3.",
+      "inputs": []
+    }
+  }
+}

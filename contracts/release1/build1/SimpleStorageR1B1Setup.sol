@@ -23,7 +23,7 @@ contract SimpleStorageR1B1Setup is PluginSetup {
 
         plugin = createERC1967Proxy(
             simpleStorageImplementation,
-            abi.encodeWithSelector(SimpleStorageR1B1.initializeBuild1.selector, _dao, number)
+            abi.encodeWithSelector(SimpleStorageR1B1.initialize.selector, _dao, number)
         );
 
         PermissionLib.MultiTargetPermission[]

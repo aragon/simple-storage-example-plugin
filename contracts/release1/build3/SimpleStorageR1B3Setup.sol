@@ -24,12 +24,7 @@ contract SimpleStorageR1B3Setup is PluginSetup {
 
         plugin = createERC1967Proxy(
             simpleStorageImplementation,
-            abi.encodeWithSelector(
-                SimpleStorageR1B3.initializeBuild3.selector,
-                _dao,
-                _number,
-                _account
-            )
+            abi.encodeWithSelector(SimpleStorageR1B3.initialize.selector, _dao, _number, _account)
         );
 
         PermissionLib.MultiTargetPermission[]
@@ -65,15 +60,11 @@ contract SimpleStorageR1B3Setup is PluginSetup {
         override
         returns (bytes memory initData, PreparedSetupData memory preparedSetupData)
     {
-        if (_currentBuild == 1) {
-            address _account = abi.decode(_payload.data, (address));
-            initData = abi.encodeWithSelector(
-                SimpleStorageR1B3.initializeFromBuild1.selector,
-                _account
-            );
-        } else if (_currentBuild == 2) {
-            initData = abi.encodeWithSelector(SimpleStorageR1B3.initializeFromBuild2.selector);
-        }
+        initData = abi.encodeWithSelector(
+            SimpleStorageR1B3.initializeFrom.selector,
+            _currentBuild,
+            _payload.data
+        );
 
         PermissionLib.MultiTargetPermission[]
             memory permissions = new PermissionLib.MultiTargetPermission[](3);

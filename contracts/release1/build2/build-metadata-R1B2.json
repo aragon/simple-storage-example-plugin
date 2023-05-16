@@ -1,0 +1,40 @@
+{
+  "ui": {},
+  "change": "Added `address account` as a second state variable.",
+  "pluginSetup": {
+    "prepareInstallation": {
+      "description": "The information required for the installation of build 2.",
+      "inputs": [
+        {
+          "name": "number",
+          "type": "uint256",
+          "internalType": "uint256",
+          "description": "The inital number to be stored."
+        },
+        {
+          "name": "account",
+          "type": "address",
+          "internalType": "address",
+          "description": "The inital account to be stored."
+        }
+      ]
+    },
+    "prepareUpdate": {
+      "1": {
+        "description": "The information required for the update from build 1 to build 2.",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address",
+            "description": "The inital account to be stored."
+          }
+        ]
+      }
+    },
+    "prepareUninstallation": {
+      "description": "The information required for the uninstallation of build 2.",
+      "inputs": []
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import buildMetadata2 from '../../contracts/release1/build2/build-metadata.json';
+import buildMetadata2 from '../../contracts/release1/build2/build-metadata-R1B2.json';
 import {
   DAO,
   SimpleStorageR1B1,
@@ -8,7 +8,7 @@ import {
   SimpleStorageR1B2__factory,
 } from '../../typechain';
 import {deployTestDao} from '../helpers/test-dao';
-import {Operation} from '../helpers/types';
+import {Operation, getNamedTypesFromMetadata} from '../helpers/types';
 import {
   ADDRESS_ONE,
   EMPTY_DATA,
@@ -40,7 +40,9 @@ describe('SimpleStorageR1B2Setup', function () {
 
     before(async () => {
       initData = abiCoder.encode(
-        buildMetadata2.pluginSetupABI.prepareInstallation,
+        getNamedTypesFromMetadata(
+          buildMetadata2.pluginSetup.prepareInstallation.inputs
+        ),
         [defaultInputR1B2.number, defaultInputR1B2.account]
       );
     });
@@ -136,7 +138,9 @@ describe('SimpleStorageR1B2Setup', function () {
               plugin: pluginBuild1.address,
               currentHelpers: [],
               data: ethers.utils.defaultAbiCoder.encode(
-                buildMetadata2.pluginSetupABI.prepareUpdate.fromBuild1,
+                getNamedTypesFromMetadata(
+                  buildMetadata2.pluginSetup.prepareUpdate['1'].inputs
+                ),
                 [ADDRESS_ONE]
               ),
             }
@@ -144,8 +148,8 @@ describe('SimpleStorageR1B2Setup', function () {
 
         const expectedInitData =
           SimpleStorageR1B2__factory.createInterface().encodeFunctionData(
-            'initializeFromBuild1',
-            [ADDRESS_ONE]
+            'initializeFrom',
+            [1, abiCoder.encode(['address'], [ADDRESS_ONE])]
           );
 
         expect(initData).to.be.equal(expectedInitData);
