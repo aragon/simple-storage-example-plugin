@@ -100,4 +100,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 export default func;
-func.tags = ['SimpleStoragePluginRepo', 'PublishSimpleStorageR1B2'];
+func.tags = ['SimpleStoragePluginRepo', 'PublishSimpleStorageR1B1'];
