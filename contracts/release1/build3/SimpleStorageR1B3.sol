@@ -24,6 +24,10 @@ contract SimpleStorageR1B3 is PluginUUPSUpgradeable {
     /// @notice Thrown if a value was already stored.
     error AlreadyStored();
 
+    constructor() {
+        _disableInitializers();
+    }
+
     /// @notice Initializes the plugin when build 3 is installed.
     /// @param _number The number to be stored.
     /// @param _account The account to be stored.

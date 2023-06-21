@@ -10,6 +10,10 @@ contract SimpleStorageR1B2 is PluginUUPSUpgradeable {
     uint256 public number; // added in build 1
     address public account; // added in build 2
 
+    constructor() {
+        _disableInitializers();
+    }
+
     /// @notice Initializes the plugin when build 2 is installed.
     /// @param _number The number to be stored.
     /// @param _account The account to be stored.
